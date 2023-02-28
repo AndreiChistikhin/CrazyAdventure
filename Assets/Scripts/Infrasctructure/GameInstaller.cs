@@ -1,3 +1,4 @@
+using Services;
 using UnityEngine;
 using Zenject;
 
@@ -26,5 +27,6 @@ public class GameInstaller : MonoInstaller
     {
         Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
         Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
+        Container.Bind<IProgressService>().To<ProgressService>().AsSingle();
     }
 }

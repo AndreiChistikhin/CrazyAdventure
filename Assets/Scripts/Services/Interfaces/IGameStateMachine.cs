@@ -1,4 +1,4 @@
 ﻿public interface IGameStateMachine : IService
 {
-    void Enter<T>();
+    void Enter<T>() where T : IState;
 }

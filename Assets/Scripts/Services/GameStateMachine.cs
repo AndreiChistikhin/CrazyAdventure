@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using Services;
 using Zenject;
 
 public class GameStateMachine : IGameStateMachine
 {
     private Dictionary<Type, IState> _states;
-    
+
     [Inject]
     public GameStateMachine(DiContainer diContainer)
     {
-        ISceneLoader loader = diContainer.Resolve<ISceneLoader>();
         _states = new Dictionary<Type, IState>
         {
-            [typeof(BootstrapState)] = new BootstrapState(loader, this),
-            [typeof(LoadProgressState)] = new LoadProgressState()
+            [typeof(BootstrapState)] = new BootstrapState(diContainer.Resolve<ISceneLoader>(), this),
+            [typeof(LoadProgressState)] = new LoadProgressState(diContainer.Resolve<IProgressService>(), this),
+            [typeof(LoadLevelState)] = new LoadLevelState(diContainer.Resolve<IProgressService>(),
+                diContainer.Resolve<ISceneLoader>(), this)
         };
     }
-    
-    public void Enter<T>() 
+
+    public void Enter<T>() where T : IState
     {
-         _states[typeof(T)].Enter();
+        _states[typeof(T)].Enter();
     }
 }
