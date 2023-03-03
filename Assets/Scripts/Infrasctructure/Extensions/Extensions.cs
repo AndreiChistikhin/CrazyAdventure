@@ -9,7 +9,7 @@ namespace Infrasctructure.Extensions
             return JsonUtility.FromJson<T>(text);
         }
 
-        public static string Serialize<T>(this object objectToSerialize)
+        public static string Serialize(this object objectToSerialize)
         {
             return JsonUtility.ToJson(objectToSerialize);
         }

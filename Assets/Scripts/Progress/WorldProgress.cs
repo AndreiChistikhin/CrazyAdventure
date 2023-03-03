@@ -3,11 +3,14 @@ using System;
 [Serializable]
 public class WorldProgress
 {
-    public string CurrentSceneName;
+    private const string FirstLevelName = "FirstLevelScene";
+
+    public string SceneToLoadName;
     public Vector3Data PositionOnScene;
 
     public WorldProgress()
     {
         PositionOnScene = new Vector3Data();
+        SceneToLoadName = FirstLevelName;
     }
 }
