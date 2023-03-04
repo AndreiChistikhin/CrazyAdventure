@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Hero
+namespace GamePlay.Hero
 {
     public class PlayerMovement : MonoBehaviour
     {
@@ -25,10 +25,17 @@ namespace Hero
             if (_inputService.Axis.magnitude <= Constants.Epsilon)
                 return;
 
-            Vector3 movementDirection = _inputService.Axis;
+            if (Camera.main == null)
+            {
+                Debug.LogError("Нет мейн кармеры");
+                return;
+            }
+            
+            Vector3 movementDirection = Camera.main.transform.TransformDirection(_inputService.Axis);
+            movementDirection.y = 0;
             movementDirection.Normalize();
             transform.forward = movementDirection;
-
+            
             movementDirection += Physics.gravity;
             _characterController.Move(movementDirection * Time.deltaTime * _movementSpeed);
         }

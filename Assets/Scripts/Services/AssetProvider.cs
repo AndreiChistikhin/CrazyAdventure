@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Hero;
+using GamePlay.Hero;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -51,9 +51,11 @@ namespace Services
 
         public async UniTask<GameObject> Instantiate(string address, Vector3 initialPoint)
         {
-            GameObject gameObject = await Addressables.InstantiateAsync(address, initialPoint, Quaternion.identity).Task;
-            _diContainer.Inject(gameObject.GetComponent<PlayerMovement>());
-            return gameObject;
+            GameObject player = await Addressables.InstantiateAsync(address, initialPoint, Quaternion.identity).Task;
+            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+            _diContainer.Inject(player.GetComponent<PlayerMovement>());
+            
+            return player;
         }
 
         public async UniTask<GameObject> Instantiate(string address, Transform under) =>

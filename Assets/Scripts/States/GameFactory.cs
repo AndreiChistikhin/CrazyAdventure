@@ -21,17 +21,19 @@ public class GameFactory : IGameFactory
     {
     }
 
-    public async UniTask CreatePlayer()
+    public async UniTask<GameObject> CreatePlayer()
     {
-        await InstantiateRegistered(AssetsAddress.Player, new Vector3(9, 1, -8));
+        return await InstantiateRegistered(AssetsAddress.Player, new Vector3(9, 1, -8));
     }
 
-    private async UniTask InstantiateRegistered(string path, Vector3 position)
+    private async UniTask<GameObject> InstantiateRegistered(string path, Vector3 position)
     {
         GameObject gameObject = await _assetProvider.Instantiate(path, position);
         foreach (IProgressHandler progressHandler in gameObject.GetComponentsInChildren<IProgressHandler>())
         {
             ProgressHandlers.Add(progressHandler);
         }
+
+        return gameObject;
     }
 }

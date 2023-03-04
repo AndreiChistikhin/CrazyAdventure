@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public interface IGameFactory : IService
 {
@@ -7,5 +8,5 @@ public interface IGameFactory : IService
     void Warmup();
     void CleanUp();
 
-    UniTask CreatePlayer();
+    UniTask<GameObject> CreatePlayer();
 }

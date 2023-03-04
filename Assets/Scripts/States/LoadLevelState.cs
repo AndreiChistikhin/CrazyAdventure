@@ -40,7 +40,8 @@ public class LoadLevelState : IState
 
     private async UniTask InitWorld()
     {
-        await _factory.CreatePlayer();
+        GameObject hero = await _factory.CreatePlayer();
+        FollowCamera(hero);
     }
 
     private void InformProgressReaders()
@@ -49,5 +50,11 @@ public class LoadLevelState : IState
         {
             progressHandler.LoadProgress();
         }
+    }
+
+    private void FollowCamera(GameObject hero)
+    {
+        if (Camera.main != null)
+            Camera.main.GetComponent<CameraFollow>().Follow(hero);
     }
 }
