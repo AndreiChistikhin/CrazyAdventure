@@ -21,6 +21,26 @@ MonoBehaviour:
     m_Address: Player
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: eced66ab21b41d84d8e7a63e59e95217
+    m_Address: HUD
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8cc62e68cb62d184288da2130c9dd237
+    m_Address: PlayerConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a30b82b2f44c93d49b013c93b67ce92f
+    m_Address: WorldConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7cf4ad6cc5139754095c1eac8bcfa424
+    m_Address: SpawnersConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 257c304c754d3b247a51ef5bea7a90d0
+    m_Address: Enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f403fa7f86625cc4caa29496ecdf682a, type: 2}
   m_SchemaSet:

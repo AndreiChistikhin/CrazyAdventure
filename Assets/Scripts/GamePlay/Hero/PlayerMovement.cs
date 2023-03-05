@@ -1,19 +1,23 @@
-﻿using Services.Interfaces;
+﻿using Infrasctructure.Extensions;
+using Services;
+using Services.Interfaces;
 using UnityEngine;
 using Zenject;
 
 namespace GamePlay.Hero
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, IProgressHandler
     {
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private float _movementSpeed;
 
         private IInputService _inputService;
+        private IProgressService _progressService;
 
         [Inject]
-        public void Construct(IInputService inputService)
+        public void Construct(IInputService inputService, IProgressService progressService)
         {
+            _progressService = progressService;
             _inputService = inputService;
         }
 
@@ -21,23 +25,35 @@ namespace GamePlay.Hero
         {
             if (_inputService == null)
                 return;
-            
-            if (_inputService.Axis.magnitude <= Constants.Epsilon)
-                return;
 
-            if (Camera.main == null)
+            Vector3 movementDirection = new Vector3();
+
+            if (_inputService.Axis.magnitude > Constants.Epsilon)
             {
-                Debug.LogError("Нет мейн кармеры");
-                return;
-            }
+                if (Camera.main == null)
+                {
+                    Debug.LogError("Нет мейн кармеры");
+                    return;
+                }
             
-            Vector3 movementDirection = Camera.main.transform.TransformDirection(_inputService.Axis);
-            movementDirection.y = 0;
-            movementDirection.Normalize();
-            transform.forward = movementDirection;
+                movementDirection = Camera.main.transform.TransformDirection(_inputService.Axis);
+                movementDirection.y = 0;
+                movementDirection.Normalize();
+                transform.forward = movementDirection;
+            }
             
             movementDirection += Physics.gravity;
             _characterController.Move(movementDirection * Time.deltaTime * _movementSpeed);
+        }
+
+        public void LoadProgress(GameProgress gameProgress)
+        {
+            transform.position = gameProgress.WorldProgress.PositionOnScene.ToVector3();
+        }
+
+        public void SaveProgress(GameProgress gameProgress)
+        {
+            gameProgress.WorldProgress.PositionOnScene = transform.position.ToSerializedVector();
         }
     }
 

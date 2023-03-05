@@ -33,5 +33,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
         Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
         Container.Bind<IInputService>().To<InputService>().AsSingle();
+        Container.Bind<IConfigService>().To<ConfigService>().AsSingle();
     }
 }

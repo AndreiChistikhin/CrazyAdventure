@@ -51,11 +51,7 @@ namespace Services
 
         public async UniTask<GameObject> Instantiate(string address, Vector3 initialPoint)
         {
-            GameObject player = await Addressables.InstantiateAsync(address, initialPoint, Quaternion.identity).Task;
-            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-            _diContainer.Inject(player.GetComponent<PlayerMovement>());
-            
-            return player;
+            return await Addressables.InstantiateAsync(address, initialPoint, Quaternion.identity).Task;
         }
 
         public async UniTask<GameObject> Instantiate(string address, Transform under) =>

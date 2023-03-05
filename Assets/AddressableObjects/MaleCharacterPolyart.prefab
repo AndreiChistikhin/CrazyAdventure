@@ -1519,6 +1519,8 @@ GameObject:
   - component: {fileID: 8336501529734710445}
   - component: {fileID: 3130136479234985136}
   - component: {fileID: 2635143076150594921}
+  - component: {fileID: 7266882253809929813}
+  - component: {fileID: 6229231104475300154}
   m_Layer: 0
   m_Name: MaleCharacterPolyart
   m_TagString: Untagged
@@ -1600,7 +1602,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5352958571798197664}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 0308cf4e83cf517488b60af58b290fe0, type: 3}
   m_Controller: {fileID: 9100000, guid: 2be64f57d7d213648aa9b2e5e8e0a39b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -1611,6 +1613,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7266882253809929813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5352958571798197664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a35b8201d7e42b881cd212519264e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2635143076150594921}
+  _characterController: {fileID: 1790556148832286602}
+--- !u!114 &6229231104475300154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5352958571798197664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a044f3c3100c4547a41332158b15b9cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5691243874327788079
 GameObject:
   m_ObjectHideFlags: 0

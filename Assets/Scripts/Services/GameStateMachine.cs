@@ -14,9 +14,9 @@ public class GameStateMachine : IGameStateMachine
         {
             [typeof(BootstrapState)] = new BootstrapState(diContainer.Resolve<ISceneLoader>(), this),
             [typeof(LoadProgressState)] = new LoadProgressState(diContainer.Resolve<IProgressService>(),
-                diContainer.Resolve<ISaveLoadService>(), this),
+                diContainer.Resolve<ISaveLoadService>(), this, diContainer.Resolve<IConfigService>()),
             [typeof(LoadLevelState)] = new LoadLevelState(diContainer.Resolve<IProgressService>(),
-                diContainer.Resolve<ISceneLoader>(), diContainer.Resolve<IGameFactory>(), this),
+                diContainer.Resolve<ISceneLoader>(), diContainer.Resolve<IGameFactory>(), this, diContainer.Resolve<IConfigService>()),
             [typeof(GameLoopState)] = new GameLoopState()
         };
     }

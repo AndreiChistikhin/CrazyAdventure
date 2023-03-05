@@ -19,7 +19,7 @@ namespace Services
         {
             foreach (IProgressHandler progressHandler in _gameFactory.ProgressHandlers)
             {
-                progressHandler.SaveProgress();
+                progressHandler.SaveProgress(_progressService.GameProgress);
             }
             PlayerPrefs.SetString(SaveInfoKey, _progressService.Serialize());
         }
