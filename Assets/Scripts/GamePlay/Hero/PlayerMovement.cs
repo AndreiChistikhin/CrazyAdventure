@@ -12,12 +12,10 @@ namespace GamePlay.Hero
         [SerializeField] private float _movementSpeed;
 
         private IInputService _inputService;
-        private IProgressService _progressService;
 
         [Inject]
-        public void Construct(IInputService inputService, IProgressService progressService)
+        public void Construct(IInputService inputService)
         {
-            _progressService = progressService;
             _inputService = inputService;
         }
 

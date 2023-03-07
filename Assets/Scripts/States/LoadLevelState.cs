@@ -57,7 +57,7 @@ public class LoadLevelState : IState
         LevelConfig levelConfig = await _configService.ForSpawners(SceneManager.GetActiveScene().name);
         foreach (EnemySpawner enemySpawner in levelConfig.EnemySpawner)
         {
-            await _factory.CreateSpawner(enemySpawner);
+            await _factory.CreateEnemy(enemySpawner);
         }
     }
 

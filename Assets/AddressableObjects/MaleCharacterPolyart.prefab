@@ -1521,6 +1521,7 @@ GameObject:
   - component: {fileID: 2635143076150594921}
   - component: {fileID: 7266882253809929813}
   - component: {fileID: 6229231104475300154}
+  - component: {fileID: 6818978820452919448}
   m_Layer: 0
   m_Name: MaleCharacterPolyart
   m_TagString: Untagged
@@ -1639,6 +1640,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a044f3c3100c4547a41332158b15b9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6818978820452919448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5352958571798197664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adffd16001b55f648a412d62790f943b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heroAnimation: {fileID: 7266882253809929813}
 --- !u!1 &5691243874327788079
 GameObject:
   m_ObjectHideFlags: 0
