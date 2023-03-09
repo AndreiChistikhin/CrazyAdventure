@@ -3,6 +3,7 @@ using Configs;
 using Cysharp.Threading.Tasks;
 using GamePlay.Enemy;
 using GamePlay.Hero;
+using GamePlay.HUD;
 using Services;
 using UnityEngine;
 using Zenject;
@@ -46,6 +47,8 @@ public class GameFactory : IGameFactory
     {
         GameObject enemy = await InstantiateRegistered(AssetsAddress.Enemy, spawner.SpawnPosition);
         enemy.GetComponent<EnemyMoveToPlayer>().Construct(_player.transform);
+        enemy.GetComponent<ActorUI>().Construct(enemy.GetComponent<IHealth>());
+        enemy.GetComponent<Attack>().Construct(_player.transform);
     }
 
     private async UniTask<GameObject> InstantiateRegistered(string path, Vector3 position = default)

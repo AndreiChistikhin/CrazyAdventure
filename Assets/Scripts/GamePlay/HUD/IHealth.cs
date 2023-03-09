@@ -8,5 +8,7 @@ namespace GamePlay.HUD
         float Current { get; set; }
 
         event Action HealthChanged;
+
+        void TakeDamage(float damage);
     }
 }
