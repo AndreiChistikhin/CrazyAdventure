@@ -23,5 +23,11 @@ namespace Infrasctructure.Extensions
         {
             return new Vector3Data {X = vector.x, Y = vector.y, Z = vector.z};
         }
+        
+        public static Vector3 AddY(this Vector3 vector, float y)
+        {
+            vector.y += y;
+            return vector;
+        }
     }
 }

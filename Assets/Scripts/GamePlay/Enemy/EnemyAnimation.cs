@@ -12,12 +12,6 @@ namespace GamePlay.Enemy
         private static readonly int AttackTrigger = Animator.StringToHash("IsAttacking");
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
-
-        private void Start()
-        {
-            Move(5);
-        }
-
         public void Move(float speed)
         {
             _animator.SetBool(IsMoving, true);

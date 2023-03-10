@@ -21,7 +21,7 @@ public class SceneLoader : ISceneLoader
             onLoaded?.Invoke();
             return;
         }
-        
+
         AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(sceneName);
         _loadingCurtain.EnableLoadingCurtain();
         

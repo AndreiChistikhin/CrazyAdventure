@@ -15,5 +15,8 @@ MonoBehaviour:
   LevelConfigs:
   - SceneName: FirstLevelScene
     EnemySpawner:
-    - SpawnPosition: {x: 2, y: 2, z: 2}
-    - SpawnPosition: {x: -2, y: 2, z: -2}
+    - SpawnPosition: {x: 0, y: 2, z: 5}
+    - SpawnPosition: {x: -3, y: 2, z: 3}
+    - SpawnPosition: {x: 3, y: 2, z: 3}
+    - SpawnPosition: {x: -5, y: 2, z: 9}
+    - SpawnPosition: {x: 5, y: 2, z: 9}

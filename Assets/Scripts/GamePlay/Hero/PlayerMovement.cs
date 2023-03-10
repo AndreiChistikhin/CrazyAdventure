@@ -2,6 +2,7 @@
 using Services;
 using Services.Interfaces;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace GamePlay.Hero
@@ -46,12 +47,23 @@ namespace GamePlay.Hero
 
         public void LoadProgress(GameProgress gameProgress)
         {
-            transform.position = gameProgress.WorldProgress.PositionOnScene.ToVector3();
+            Vector3Data savedPosition = gameProgress.WorldProgress.PositionOnScene;
+                
+            if (savedPosition != null)
+                Warp(to: savedPosition);
         }
 
         public void SaveProgress(GameProgress gameProgress)
         {
             gameProgress.WorldProgress.PositionOnScene = transform.position.ToSerializedVector();
+            gameProgress.WorldProgress.SceneToLoadName = SceneManager.GetActiveScene().name;
+        }
+        
+        private void Warp(Vector3Data to)
+        {
+            _characterController.enabled = false;
+            transform.position = to.ToVector3().AddY(_characterController.height);
+            _characterController.enabled = true;
         }
     }
 

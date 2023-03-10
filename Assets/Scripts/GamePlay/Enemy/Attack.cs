@@ -33,7 +33,10 @@ public class Attack : MonoBehaviour
         UpdateCoolDown();
 
         if (!_isAttacking && CoolDownIsUp() && _attackIsActive)
+        {
+            Debug.Log("StartAttack");
             StartAttack();
+        }
     }
 
     private void OnAttack()

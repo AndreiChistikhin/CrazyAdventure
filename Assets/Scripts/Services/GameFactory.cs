@@ -12,14 +12,16 @@ public class GameFactory : IGameFactory
 {
     private readonly IAssetProvider _assetProvider;
     private readonly DiContainer _diContainer;
+    private readonly IProgressService _progressService;
     public List<IProgressHandler> ProgressHandlers { get; } = new List<IProgressHandler>();
 
     private GameObject _player;
 
-    public GameFactory(IAssetProvider assetProvider, DiContainer diContainer)
+    public GameFactory(IAssetProvider assetProvider, DiContainer diContainer, IProgressService progressService)
     {
         _assetProvider = assetProvider;
         _diContainer = diContainer;
+        _progressService = progressService;
     }
 
     public void Warmup()
@@ -40,7 +42,11 @@ public class GameFactory : IGameFactory
 
     public async UniTask<GameObject> CreateHUD()
     {
-        return await InstantiateRegistered(AssetsAddress.HUD);
+        GameObject hud = await InstantiateRegistered(AssetsAddress.HUD);
+
+        hud.GetComponentInChildren<LootCount>().Construct(_progressService.GameProgress);
+
+        return hud;
     }
 
     public async UniTask CreateEnemy(EnemySpawner spawner)
@@ -49,11 +55,23 @@ public class GameFactory : IGameFactory
         enemy.GetComponent<EnemyMoveToPlayer>().Construct(_player.transform);
         enemy.GetComponent<ActorUI>().Construct(enemy.GetComponent<IHealth>());
         enemy.GetComponent<Attack>().Construct(_player.transform);
+        enemy.GetComponentInChildren<LootSpawner>().Construct(this);
+    }
+
+    public async UniTask<LootPiece> CreateLoot()
+    {
+        GameObject prefab = await InstantiateRegistered(AssetsAddress.Loot);
+        LootPiece lootPiece = prefab.GetComponent<LootPiece>();
+        
+        lootPiece.Construct(_progressService.GameProgress);
+
+        return lootPiece;
     }
 
     private async UniTask<GameObject> InstantiateRegistered(string path, Vector3 position = default)
     {
-        GameObject gameObject = await _assetProvider.Instantiate(path, position);
+        GameObject gameObject = await _assetProvider.Instantiate(path);
+        gameObject.transform.position = position;
         foreach (IProgressHandler progressHandler in gameObject.GetComponentsInChildren<IProgressHandler>())
         {
             ProgressHandlers.Add(progressHandler);

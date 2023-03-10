@@ -4,4 +4,12 @@ using System;
 public class LootProgress
 {
     public int LootCount;
+
+    public event Action Changed;
+
+    public void Collect(Loot loot)
+    {
+        LootCount += loot.Value;
+        Changed?.Invoke();
+    }
 }

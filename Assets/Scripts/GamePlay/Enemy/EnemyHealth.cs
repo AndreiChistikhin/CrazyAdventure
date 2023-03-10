@@ -14,7 +14,9 @@ public class EnemyHealth : MonoBehaviour, IHealth
     public void TakeDamage(float damage)
     {
         Current -= damage;
-        _enemyAniamtor.PlayHit();
+
+        if (Current > 0)
+            _enemyAniamtor.PlayHit();
 
         HealthChanged?.Invoke();
     }

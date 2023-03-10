@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Infrasctructure.Extensions;
 using UnityEngine;
 
 public class LootSpawner : MonoBehaviour
@@ -28,14 +27,15 @@ public class LootSpawner : MonoBehaviour
 
     private async void SpawnLoot()
     {
-        /*LootPiece loot = await _factory.CreateLoot();
-        loot.transform.position = transform.position;
+        LootPiece loot = await _factory.CreateLoot();
+        loot.transform.position = transform.position.AddY(1);
 
         Loot lootItem = new Loot()
         {
-            Value = Random.Range(_lootMin, _lootmax)
+            //Value = Random.Range(_lootMin, _lootmax)
+            Value = Random.Range(1, 3)
         };
             
-        loot.Initialize(lootItem);*/
+        loot.Initialize(lootItem);
     }
 }

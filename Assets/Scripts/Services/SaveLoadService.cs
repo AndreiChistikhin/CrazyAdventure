@@ -21,7 +21,8 @@ namespace Services
             {
                 progressHandler.SaveProgress(_progressService.GameProgress);
             }
-            PlayerPrefs.SetString(SaveInfoKey, _progressService.Serialize());
+
+            PlayerPrefs.SetString(SaveInfoKey, _progressService.GameProgress.Serialize());
         }
 
         public GameProgress LoadProgress()

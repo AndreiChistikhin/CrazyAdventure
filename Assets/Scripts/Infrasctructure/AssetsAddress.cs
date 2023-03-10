@@ -6,4 +6,5 @@ public static class AssetsAddress
     public const string WorldConfig = "WorldConfig";
     public const string SpawnerConfig = "SpawnersConfig";
     public const string Enemy = "Enemy";
+    public static string Loot = "Loot";
 }

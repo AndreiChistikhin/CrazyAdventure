@@ -41,6 +41,10 @@ MonoBehaviour:
     m_Address: Enemy
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: ea99beb85c3aed3478bd0801785db819
+    m_Address: Loot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f403fa7f86625cc4caa29496ecdf682a, type: 2}
   m_SchemaSet:

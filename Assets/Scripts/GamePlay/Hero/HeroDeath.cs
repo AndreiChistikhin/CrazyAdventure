@@ -4,9 +4,8 @@ using UnityEngine;
 public class HeroDeath : MonoBehaviour
 {
     [SerializeField] private HeroHealth _heroHealth;
-    [SerializeField] private PlayerMovement _cubeMove;
+    [SerializeField] private PlayerMovement _movement;
     [SerializeField] private HeroAnimation _animator;
-    [SerializeField] private GameObject _deathFx;
     [SerializeField] private HeroAttack _heroAttack;
     private bool _isDead;
 
@@ -23,10 +22,8 @@ public class HeroDeath : MonoBehaviour
     private void Die()
     {
         _isDead = true;
-        _cubeMove.enabled = false;
+        _movement.enabled = false;
         _heroAttack.enabled = false;
         _animator.PlayDied();
-
-        Instantiate(_deathFx, transform.position, Quaternion.identity);
     }
 }
