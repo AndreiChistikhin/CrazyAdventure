@@ -12,7 +12,6 @@ public interface IGameFactory : IService
 
     UniTask<GameObject> CreatePlayer();
     UniTask<GameObject> CreateHUD();
-
-    UniTask CreateEnemy(EnemySpawner spawner);
     UniTask<LootPiece> CreateLoot();
+    UniTask CreateEnemy(EnemySpawner enemySpawner, string enemySpawnerEnemyId);
 }

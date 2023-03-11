@@ -9,5 +9,6 @@ namespace Services
         UniTask<PlayerConfig> ForPlayer();
         UniTask<WorldConfig> ForWorld();
         UniTask<LevelConfig> ForSpawners(string level);
+        UniTask<WindowParameters> ForWindow(WindowId loseGame);
     }
 }

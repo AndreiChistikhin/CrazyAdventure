@@ -1,5 +1,6 @@
 using GamePlay.Hero;
 using UnityEngine;
+using Zenject;
 
 public class HeroDeath : MonoBehaviour
 {
@@ -8,6 +9,13 @@ public class HeroDeath : MonoBehaviour
     [SerializeField] private HeroAnimation _animator;
     [SerializeField] private HeroAttack _heroAttack;
     private bool _isDead;
+    private IWindowService _windowService;
+
+    [Inject]
+    private void Construct(IWindowService windowService)
+    {
+        _windowService = windowService;
+    }
 
     private void Start() => _heroHealth.HealthChanged += HealthChanged;
 
@@ -25,5 +33,6 @@ public class HeroDeath : MonoBehaviour
         _movement.enabled = false;
         _heroAttack.enabled = false;
         _animator.PlayDied();
+        _windowService.Open(WindowId.LoseGame);
     }
 }

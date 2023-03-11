@@ -37,6 +37,7 @@ public class GameFactory : IGameFactory
         _player = await InstantiateRegistered(AssetsAddress.Player);
         _diContainer.Inject(_player.GetComponent<PlayerMovement>());
         _diContainer.Inject(_player.GetComponent<HeroAttack>());
+        _diContainer.Inject(_player.GetComponent<HeroDeath>());
         return _player;
     }
 
@@ -48,14 +49,16 @@ public class GameFactory : IGameFactory
 
         return hud;
     }
-
-    public async UniTask CreateEnemy(EnemySpawner spawner)
+    
+    public async UniTask CreateEnemy(EnemySpawner spawner, string enemyId)
     {
         GameObject enemy = await InstantiateRegistered(AssetsAddress.Enemy, spawner.SpawnPosition);
         enemy.GetComponent<EnemyMoveToPlayer>().Construct(_player.transform);
         enemy.GetComponent<ActorUI>().Construct(enemy.GetComponent<IHealth>());
         enemy.GetComponent<Attack>().Construct(_player.transform);
         enemy.GetComponentInChildren<LootSpawner>().Construct(this);
+        enemy.GetComponent<EnemyDeath>().OnDeath +=
+            () => _progressService.GameProgress.EnemyProgress.ClearedSpawners.Add(enemyId);
     }
 
     public async UniTask<LootPiece> CreateLoot()

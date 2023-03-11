@@ -29,5 +29,11 @@ namespace Services
             SpawnersConfig spawnersConfig = await _assetProvider.Load<SpawnersConfig>(AssetsAddress.SpawnerConfig);
             return spawnersConfig.LevelConfigs.FirstOrDefault(x => x.SceneName == level);
         }
+
+        public async UniTask<WindowParameters> ForWindow(WindowId windowId)
+        {
+            WindowConfig spawnersConfig = await _assetProvider.Load<WindowConfig>(AssetsAddress.WindowConfig);
+            return spawnersConfig.Windows.FirstOrDefault(x => x.WindowId == windowId);
+        }
     }
 }

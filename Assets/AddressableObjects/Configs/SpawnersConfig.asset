@@ -15,8 +15,25 @@ MonoBehaviour:
   LevelConfigs:
   - SceneName: FirstLevelScene
     EnemySpawner:
-    - SpawnPosition: {x: 0, y: 2, z: 5}
-    - SpawnPosition: {x: -3, y: 2, z: 3}
-    - SpawnPosition: {x: 3, y: 2, z: 3}
-    - SpawnPosition: {x: -5, y: 2, z: 9}
-    - SpawnPosition: {x: 5, y: 2, z: 9}
+    - EnemyId: 1
+      SpawnPosition: {x: 0, y: 2, z: 5}
+    - EnemyId: 2
+      SpawnPosition: {x: -3, y: 2, z: 3}
+    - EnemyId: 3
+      SpawnPosition: {x: 3, y: 2, z: 3}
+    - EnemyId: 4
+      SpawnPosition: {x: -5, y: 2, z: 9}
+    - EnemyId: 5
+      SpawnPosition: {x: 5, y: 2, z: 9}
+  - SceneName: SecondLevelScene
+    EnemySpawner:
+    - EnemyId: 6
+      SpawnPosition: {x: 0, y: 2, z: -5}
+    - EnemyId: 7
+      SpawnPosition: {x: -3, y: 2, z: -3}
+    - EnemyId: 8
+      SpawnPosition: {x: 3, y: 2, z: 0}
+    - EnemyId: 9
+      SpawnPosition: {x: -5, y: 2, z: -3}
+    - EnemyId: 10
+      SpawnPosition: {x: 4, y: 2, z: 0}

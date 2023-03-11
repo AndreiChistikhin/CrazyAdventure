@@ -1,11 +1,10 @@
+using System;
 using Services;
 using UnityEngine;
 using Zenject;
 
 public class GameSaver : MonoBehaviour
 {
-    [SerializeField] private BoxCollider _collider;
-
     private ISaveLoadService _saveLoadService;
 
     [Inject]
@@ -13,20 +12,16 @@ public class GameSaver : MonoBehaviour
     {
         _saveLoadService = saveLoadService;
     }
-    
+
     private void OnTriggerEnter(Collider other)
+    {
+        SaveGame();
+    }
+
+    private void SaveGame()
     {
         _saveLoadService.SaveProgress();
         Debug.Log("Progress Saved");
         gameObject.SetActive(false);
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (_collider == null)
-            return; 
-            
-        Gizmos.color = new Color32(30, 200, 30, 130);
-        Gizmos.DrawCube(transform.position + _collider.center, _collider.size);
     }
 }

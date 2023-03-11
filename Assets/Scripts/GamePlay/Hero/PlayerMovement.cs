@@ -1,8 +1,6 @@
 ﻿using Infrasctructure.Extensions;
-using Services;
 using Services.Interfaces;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace GamePlay.Hero
@@ -49,14 +47,13 @@ namespace GamePlay.Hero
         {
             Vector3Data savedPosition = gameProgress.WorldProgress.PositionOnScene;
                 
-            if (savedPosition != null)
+            if (savedPosition != null && _characterController != null)
                 Warp(to: savedPosition);
         }
 
         public void SaveProgress(GameProgress gameProgress)
         {
             gameProgress.WorldProgress.PositionOnScene = transform.position.ToSerializedVector();
-            gameProgress.WorldProgress.SceneToLoadName = SceneManager.GetActiveScene().name;
         }
         
         private void Warp(Vector3Data to)
