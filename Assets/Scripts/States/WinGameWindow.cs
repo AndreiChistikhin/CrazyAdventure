@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WinGameWindow : MonoBehaviour
 {
-    [SerializeField] private Button _startAgainButton;
+    [SerializeField] private Button _quitGameButton;
     [SerializeField] private TMP_Text _pointsText;
 
     private IProgressService _progressService;
@@ -14,13 +14,14 @@ public class WinGameWindow : MonoBehaviour
     {
         _progressService = progressService;
         _progressService.GameProgress.LootProgress.Changed += ChangePointsAmount;
-        _startAgainButton.onClick.AddListener(QuitGame);
+        _quitGameButton.onClick.AddListener(QuitGame);
+        ChangePointsAmount();
     }
 
     private void OnDestroy()
     {
         _progressService.GameProgress.LootProgress.Changed -= ChangePointsAmount;
-        _startAgainButton.onClick.RemoveListener(QuitGame);
+        _quitGameButton.onClick.RemoveListener(QuitGame);
     }
 
     private void ChangePointsAmount()

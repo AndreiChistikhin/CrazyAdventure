@@ -1,4 +1,3 @@
-using System;
 using Configs;
 using Cysharp.Threading.Tasks;
 using GamePlay.HUD;
@@ -16,19 +15,21 @@ public class LoadLevelState : IState
     private IUIFactory _uiFactory;
 
     public LoadLevelState(IProgressService progressService, ISceneLoader sceneLoader, IGameFactory factory,
-        IGameStateMachine gameStateMachine, IConfigService configService)
+        IGameStateMachine gameStateMachine, IConfigService configService, IUIFactory uiFactory)
     {
         _progressService = progressService;
         _sceneLoader = sceneLoader;
         _gameStateMachine = gameStateMachine;
         _configService = configService;
         _factory = factory;
+        _uiFactory = uiFactory;
     }
 
     public void Enter()
     {
         _factory.CleanUp();
         _factory.Warmup();
+        _uiFactory.CleanUp();
         _sceneLoader.LoadScene(_progressService.GameProgress.WorldProgress.SceneToLoadName, OnLoaded);
     }
 

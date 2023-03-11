@@ -45,6 +45,14 @@ MonoBehaviour:
     m_Address: Loot
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: e5abeb31107472e4c9758d8be142e293
+    m_Address: UIRoot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0c80e62410268e24eb31a868dc9ad606
+    m_Address: WindowsConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f403fa7f86625cc4caa29496ecdf682a, type: 2}
   m_SchemaSet:

@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class LoseGameWindow : MonoBehaviour
 {
@@ -12,12 +13,14 @@ public class LoseGameWindow : MonoBehaviour
     private IGameStateMachine _gameStateMachine;
     private IProgressService _progressService;
 
+    [Inject]
     public void Construct(IProgressService progressService, IGameStateMachine gameStateMachine)
     {
         _gameStateMachine = gameStateMachine;
         _progressService = progressService;
         _progressService.GameProgress.LootProgress.Changed += ChangePointsAmount;
         _startAgainButton.onClick.AddListener(StartGameAgain);
+        ChangePointsAmount();
     }
 
     private void OnDestroy()

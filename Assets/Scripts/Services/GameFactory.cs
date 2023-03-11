@@ -13,15 +13,21 @@ public class GameFactory : IGameFactory
     private readonly IAssetProvider _assetProvider;
     private readonly DiContainer _diContainer;
     private readonly IProgressService _progressService;
+    private readonly IConfigService _configService;
+    private readonly IWindowService _windowService;
     public List<IProgressHandler> ProgressHandlers { get; } = new List<IProgressHandler>();
 
+    private List<GameObject> _listOfInstantiatedObjects = new List<GameObject>();
     private GameObject _player;
 
-    public GameFactory(IAssetProvider assetProvider, DiContainer diContainer, IProgressService progressService)
+    public GameFactory(IAssetProvider assetProvider, DiContainer diContainer, IProgressService progressService,
+        IConfigService configService, IWindowService windowService)
     {
         _assetProvider = assetProvider;
         _diContainer = diContainer;
         _progressService = progressService;
+        _configService = configService;
+        _windowService = windowService;
     }
 
     public void Warmup()
@@ -30,6 +36,9 @@ public class GameFactory : IGameFactory
 
     public void CleanUp()
     {
+        ProgressHandlers.Clear();
+        DestroyAllInstantiatedObjects();
+        _assetProvider.CleanUp();
     }
 
     public async UniTask<GameObject> CreatePlayer()
@@ -49,7 +58,7 @@ public class GameFactory : IGameFactory
 
         return hud;
     }
-    
+
     public async UniTask CreateEnemy(EnemySpawner spawner, string enemyId)
     {
         GameObject enemy = await InstantiateRegistered(AssetsAddress.Enemy, spawner.SpawnPosition);
@@ -57,6 +66,7 @@ public class GameFactory : IGameFactory
         enemy.GetComponent<ActorUI>().Construct(enemy.GetComponent<IHealth>());
         enemy.GetComponent<Attack>().Construct(_player.transform);
         enemy.GetComponentInChildren<LootSpawner>().Construct(this);
+        enemy.GetComponent<EnemyDeath>().Construct(_configService, _progressService, _windowService);
         enemy.GetComponent<EnemyDeath>().OnDeath +=
             () => _progressService.GameProgress.EnemyProgress.ClearedSpawners.Add(enemyId);
     }
@@ -65,7 +75,7 @@ public class GameFactory : IGameFactory
     {
         GameObject prefab = await InstantiateRegistered(AssetsAddress.Loot);
         LootPiece lootPiece = prefab.GetComponent<LootPiece>();
-        
+
         lootPiece.Construct(_progressService.GameProgress);
 
         return lootPiece;
@@ -80,6 +90,18 @@ public class GameFactory : IGameFactory
             ProgressHandlers.Add(progressHandler);
         }
 
+        _listOfInstantiatedObjects.Add(gameObject);
+
         return gameObject;
+    }
+
+    private void DestroyAllInstantiatedObjects()
+    {
+        foreach (GameObject instantiatedObject in _listOfInstantiatedObjects)
+        {
+            Object.Destroy(instantiatedObject);
+        }
+
+        _listOfInstantiatedObjects.Clear();
     }
 }
