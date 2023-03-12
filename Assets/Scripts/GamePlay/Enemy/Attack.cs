@@ -1,99 +1,101 @@
 ﻿using System.Linq;
-using GamePlay.Enemy;
 using GamePlay.HUD;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+namespace GamePlay.Enemy
 {
-    [SerializeField] private EnemyAnimation Animator;
-    [SerializeField] private float AttackCoolDown = 3f;
-    [SerializeField] private float Cleavage = 0.5f;
-    [SerializeField] private float EffectiveDistance = 0.5f;
-    [SerializeField] private float Damage;
-
-    private Transform _heroTransform;
-    private float _currentAttackCoolDown;
-    private bool _isAttacking;
-    private int _layerMask;
-    private Collider[] _hits = new Collider[1];
-    private bool _attackIsActive;
-
-    public void Construct(Transform heroTransform)
+    public class Attack : MonoBehaviour
     {
-        _heroTransform = heroTransform;
-    }
+        [SerializeField] private EnemyAnimation Animator;
+        [SerializeField] private float AttackCoolDown = 3f;
+        [SerializeField] private float Cleavage = 0.5f;
+        [SerializeField] private float EffectiveDistance = 0.5f;
+        [SerializeField] private float Damage;
 
-    private void Awake()
-    {
-        _layerMask = 1 << LayerMask.NameToLayer("Player");
-    }
+        private Transform _heroTransform;
+        private float _currentAttackCoolDown;
+        private bool _isAttacking;
+        private int _layerMask;
+        private Collider[] _hits = new Collider[1];
+        private bool _attackIsActive;
 
-    private void Update()
-    {
-        UpdateCoolDown();
-
-        if (!_isAttacking && CoolDownIsUp() && _attackIsActive)
+        public void Construct(Transform heroTransform)
         {
-            Debug.Log("StartAttack");
-            StartAttack();
+            _heroTransform = heroTransform;
         }
-    }
 
-    private void OnAttack()
-    {
-        if (Hit(out Collider hit))
+        private void Awake()
         {
-            hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+            _layerMask = 1 << LayerMask.NameToLayer("Player");
         }
-    }
 
-    private void OnAttackEnded()
-    {
-        _currentAttackCoolDown = AttackCoolDown;
-        _isAttacking = false;
-    }
+        private void Update()
+        {
+            UpdateCoolDown();
 
-    public void EnableAttack()
-    {
-        _attackIsActive = true;
-    }
+            if (!_isAttacking && CoolDownIsUp() && _attackIsActive)
+            {
+                Debug.Log("StartAttack");
+                StartAttack();
+            }
+        }
 
-    public void DisableAttack()
-    {
-        _attackIsActive = false;
-    }
+        private void OnAttack()
+        {
+            if (Hit(out Collider hit))
+            {
+                hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+            }
+        }
 
-    private bool Hit(out Collider hit)
-    {
-        int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
+        private void OnAttackEnded()
+        {
+            _currentAttackCoolDown = AttackCoolDown;
+            _isAttacking = false;
+        }
 
-        hit = _hits.FirstOrDefault();
+        public void EnableAttack()
+        {
+            _attackIsActive = true;
+        }
 
-        return hitsCount > 0;
-    }
+        public void DisableAttack()
+        {
+            _attackIsActive = false;
+        }
 
-    private Vector3 StartPoint()
-    {
-        return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-               transform.forward * EffectiveDistance;
-    }
+        private bool Hit(out Collider hit)
+        {
+            int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
 
-    private void UpdateCoolDown()
-    {
-        if (_currentAttackCoolDown > 0)
-            _currentAttackCoolDown -= Time.deltaTime;
-    }
+            hit = _hits.FirstOrDefault();
 
-    private bool CoolDownIsUp()
-    {
-        return _currentAttackCoolDown <= 0;
-    }
+            return hitsCount > 0;
+        }
 
-    private void StartAttack()
-    {
-        transform.LookAt(_heroTransform);
-        Animator.PlayAttack();
+        private Vector3 StartPoint()
+        {
+            return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
+                   transform.forward * EffectiveDistance;
+        }
 
-        _isAttacking = true;
+        private void UpdateCoolDown()
+        {
+            if (_currentAttackCoolDown > 0)
+                _currentAttackCoolDown -= Time.deltaTime;
+        }
+
+        private bool CoolDownIsUp()
+        {
+            return _currentAttackCoolDown <= 0;
+        }
+
+        private void StartAttack()
+        {
+            transform.LookAt(_heroTransform);
+            Animator.PlayAttack();
+
+            _isAttacking = true;
+        }
     }
 }

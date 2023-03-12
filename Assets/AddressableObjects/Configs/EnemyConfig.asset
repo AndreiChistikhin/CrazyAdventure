@@ -10,30 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 077044fe98984c340a363ab168c087a5, type: 3}
-  m_Name: SpawnersConfig
+  m_Name: EnemyConfig
   m_EditorClassIdentifier: 
-  LevelConfigs:
+  MinimumLoot: 1
+  MaximumLoot: 5
+  EnemyDamage: 1
+  EnemyPositions:
   - SceneName: FirstLevelScene
     EnemySpawner:
     - EnemyId: 1
-      SpawnPosition: {x: 0, y: 2, z: 5}
+      SpawnPosition: {x: 0, y: 0, z: 5}
     - EnemyId: 2
-      SpawnPosition: {x: -3, y: 2, z: 3}
+      SpawnPosition: {x: 3, y: 0, z: 3}
     - EnemyId: 3
-      SpawnPosition: {x: 3, y: 2, z: 3}
+      SpawnPosition: {x: -3, y: 0, z: 3}
     - EnemyId: 4
-      SpawnPosition: {x: -5, y: 2, z: 9}
+      SpawnPosition: {x: 2, y: 0, z: 4}
     - EnemyId: 5
-      SpawnPosition: {x: 5, y: 2, z: 9}
+      SpawnPosition: {x: -2, y: 0, z: 5}
   - SceneName: SecondLevelScene
     EnemySpawner:
     - EnemyId: 6
-      SpawnPosition: {x: 0, y: 2, z: -5}
+      SpawnPosition: {x: 0, y: 0, z: 5}
     - EnemyId: 7
-      SpawnPosition: {x: -3, y: 2, z: -3}
+      SpawnPosition: {x: 3, y: 0, z: 3}
     - EnemyId: 8
-      SpawnPosition: {x: 3, y: 2, z: 0}
+      SpawnPosition: {x: -3, y: 0, z: 3}
     - EnemyId: 9
-      SpawnPosition: {x: -5, y: 2, z: -3}
+      SpawnPosition: {x: 2, y: 0, z: 4}
     - EnemyId: 10
-      SpawnPosition: {x: 4, y: 2, z: 0}
+      SpawnPosition: {x: -2, y: 0, z: 5}

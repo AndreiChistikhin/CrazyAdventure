@@ -1,53 +1,61 @@
-﻿using Cysharp.Threading.Tasks;
-using GamePlay.Configs;
+﻿using System.Linq;
+using Configs;
+using Cysharp.Threading.Tasks;
 using Infrasctructure.Extensions;
-using Services;
+using Progress;
+using Services.Interfaces;
 
-public class LoadProgressState : IState
+namespace States
 {
-    private readonly IProgressService _gameProgress;
-    private readonly ISaveLoadService _saveLoadService;
-    private readonly IGameStateMachine _stateMachine;
-    private readonly IConfigService _configService;
-
-    public LoadProgressState(IProgressService gameProgress, ISaveLoadService saveLoadService,
-        IGameStateMachine stateMachine, IConfigService configService)
+    public class LoadProgressState : IState
     {
-        _gameProgress = gameProgress;
-        _saveLoadService = saveLoadService;
-        _stateMachine = stateMachine;
-        _configService = configService;
-    }
+        private readonly IProgressService _gameProgress;
+        private readonly ISaveLoadService _saveLoadService;
+        private readonly IGameStateMachine _stateMachine;
+        private readonly IConfigService _configService;
 
-    public void Enter()
-    {
-        LoadProgress().Forget();
-    }
+        public LoadProgressState(IProgressService gameProgress, ISaveLoadService saveLoadService,
+            IGameStateMachine stateMachine, IConfigService configService)
+        {
+            _gameProgress = gameProgress;
+            _saveLoadService = saveLoadService;
+            _stateMachine = stateMachine;
+            _configService = configService;
+        }
 
-    private async UniTaskVoid LoadProgress()
-    {
-        await LoadGame();
-        _stateMachine.Enter<LoadLevelState>();
-    }
+        public void Enter()
+        {
+            LoadProgress().Forget();
+        }
 
-    private async UniTask LoadGame()
-    {
-        _gameProgress.GameProgress = _saveLoadService.LoadProgress() ?? await ReturnNewProgress();
-    }
+        private async UniTaskVoid LoadProgress()
+        {
+            await LoadGame();
+            _stateMachine.Enter<LoadLevelState>();
+        }
 
-    private async UniTask<GameProgress> ReturnNewProgress()
-    {
-        GameProgress gameProgress = new GameProgress();
-        PlayerConfig playerConfig = await _configService.ForPlayer();
-        WorldConfig worldConfig = await _configService.ForWorld();
+        private async UniTask LoadGame()
+        {
+            _gameProgress.GameProgress = _saveLoadService.LoadProgress() ?? await ReturnNewProgress();
+        }
 
-        gameProgress.LootProgress.LootCount = 0;
-        gameProgress.PlayerProgress.Damage = playerConfig.Damage;
-        gameProgress.PlayerProgress.MaxHp = playerConfig.MaxHealth;
-        gameProgress.PlayerProgress.CurrentHp = playerConfig.MaxHealth;
-        gameProgress.WorldProgress.PositionOnScene = worldConfig.InitialPosition.ToSerializedVector();
-        gameProgress.WorldProgress.SceneToLoadName = worldConfig.InitialLevelName;
+        private async UniTask<GameProgress> ReturnNewProgress()
+        {
+            GameProgress gameProgress = new GameProgress();
+            PlayerConfig playerConfig = await _configService.ForPlayer();
+            WorldConfig worldConfig = await _configService.ForWorld();
 
-        return gameProgress;
+            gameProgress.LootProgress.LootCount = 0;
+            gameProgress.PlayerProgress.Damage = playerConfig.Damage;
+            gameProgress.PlayerProgress.MaxHp = playerConfig.MaxHealth;
+            gameProgress.PlayerProgress.CurrentHp = playerConfig.MaxHealth;
+            gameProgress.WorldProgress.SceneToLoadName = worldConfig.InitialLevelName;
+            gameProgress.WorldProgress.PositionOnScene = worldConfig.StartingPoints
+                .FirstOrDefault(x => x.LevelName == worldConfig.InitialLevelName)
+                ?.InitialPositionOnLevel
+                .ToSerializedVector();
+
+            return gameProgress;
+        }
     }
 }

@@ -1,7 +1,10 @@
 using System;
 
-[Serializable]
-public class Loot
+namespace GamePlay.Loot
 {
-    public int Value;
+    [Serializable]
+    public class Loot
+    {
+        public int Value;
+    }
 }

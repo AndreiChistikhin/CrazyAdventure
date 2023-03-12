@@ -2,20 +2,23 @@ using System;
 using GamePlay.Hero;
 using UnityEngine;
 
-public class TriggerObserver : MonoBehaviour
+namespace GamePlay.Enemy
 {
-    public event Action TriggerEnter;
-    public event Action TriggerExit;
-
-    private void OnTriggerEnter(Collider other)
+    public class TriggerObserver : MonoBehaviour
     {
-        if(other.TryGetComponent(out HeroHealth hero))
-            TriggerEnter?.Invoke();
-    }
+        public event Action TriggerEnter;
+        public event Action TriggerExit;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.TryGetComponent(out HeroHealth hero))
-            TriggerExit?.Invoke();
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.TryGetComponent(out HeroHealth hero))
+                TriggerEnter?.Invoke();
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if(other.TryGetComponent(out HeroHealth hero))
+                TriggerExit?.Invoke();
+        }
     }
 }

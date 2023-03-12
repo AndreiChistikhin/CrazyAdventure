@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Progress;
+using UnityEngine;
 
 namespace Infrasctructure.Extensions
 {

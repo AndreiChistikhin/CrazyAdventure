@@ -1,17 +1,21 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Configs;
 using Cysharp.Threading.Tasks;
+using GamePlay.Loot;
+using Progress;
 using UnityEngine;
 
-public interface IGameFactory : IService
+namespace Services.Interfaces
 {
-    List<IProgressHandler> ProgressHandlers { get; }
-    void Warmup();
-    void CleanUp();
+    public interface IGameFactory : IService
+    {
+        List<IProgressHandler> ProgressHandlers { get; }
+        void Warmup();
+        void CleanUp();
 
-    UniTask<GameObject> CreatePlayer();
-    UniTask<GameObject> CreateHUD();
-    UniTask<LootPiece> CreateLoot();
-    UniTask CreateEnemy(EnemySpawner enemySpawner, string enemySpawnerEnemyId);
+        UniTask<GameObject> CreatePlayer();
+        UniTask<GameObject> CreateHUD();
+        UniTask<LootPiece> CreateLoot();
+        UniTask CreateEnemy(EnemySpawner enemySpawner, string enemySpawnerEnemyId);
+    }
 }

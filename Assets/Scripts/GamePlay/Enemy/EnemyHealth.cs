@@ -1,23 +1,25 @@
 using System;
-using GamePlay.Enemy;
 using GamePlay.HUD;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour, IHealth
+namespace GamePlay.Enemy
 {
-    [SerializeField] private EnemyAnimation _enemyAniamtor;
-    [field: SerializeField] public float Maximum { get; set; }
-    [field: SerializeField] public float Current { get; set; }
-
-    public event Action HealthChanged;
-
-    public void TakeDamage(float damage)
+    public class EnemyHealth : MonoBehaviour, IHealth
     {
-        Current -= damage;
+        [SerializeField] private EnemyAnimation _enemyAniamtor;
+        [field: SerializeField] public float Maximum { get; set; }
+        [field: SerializeField] public float Current { get; set; }
 
-        if (Current > 0)
-            _enemyAniamtor.PlayHit();
+        public event Action HealthChanged;
 
-        HealthChanged?.Invoke();
+        public void TakeDamage(float damage)
+        {
+            Current -= damage;
+
+            if (Current > 0)
+                _enemyAniamtor.PlayHit();
+
+            HealthChanged?.Invoke();
+        }
     }
 }

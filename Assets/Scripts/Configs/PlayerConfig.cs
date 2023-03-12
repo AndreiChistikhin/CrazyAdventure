@@ -1,9 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Configs/Player", fileName = "PlayerConfig")]
-public class PlayerConfig : ScriptableObject
+namespace Configs
 {
-    public float MaxHealth;
-    public float Damage;
-    public float Cleavage;
+    [CreateAssetMenu(menuName = "Configs/Player", fileName = "PlayerConfig")]
+    public class PlayerConfig : ScriptableObject
+    {
+        public float MaxHealth;
+        public float Damage;
+    }
 }

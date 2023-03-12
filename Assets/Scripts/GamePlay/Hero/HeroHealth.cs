@@ -1,5 +1,6 @@
 ﻿using System;
 using GamePlay.HUD;
+using Progress;
 using UnityEngine;
 
 namespace GamePlay.Hero
@@ -21,6 +22,7 @@ namespace GamePlay.Hero
         {
             Maximum = gameProgress.PlayerProgress.MaxHp;
             Current = gameProgress.PlayerProgress.CurrentHp;
+            HealthChanged?.Invoke();
         }
 
         public void SaveProgress(GameProgress gameProgress)

@@ -1,4 +1,6 @@
 ﻿using Infrasctructure.Extensions;
+using Progress;
+using Services.Interfaces;
 using UnityEngine;
 
 namespace Services

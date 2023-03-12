@@ -1,33 +1,38 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using Infrasctructure;
+using Services.Interfaces;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-public class SceneLoader : ISceneLoader
+namespace Services
 {
-    private LoadingCurtain _loadingCurtain;
-
-    [Inject]
-    public SceneLoader(LoadingCurtain loadingCurtain)
+    public class SceneLoader : ISceneLoader
     {
-        _loadingCurtain = loadingCurtain;
-    }
+        private LoadingCurtain _loadingCurtain;
 
-    public async UniTaskVoid LoadScene(string sceneName, Action onLoaded = null)
-    {
-        if (SceneManager.GetActiveScene().name == sceneName)
+        [Inject]
+        public SceneLoader(LoadingCurtain loadingCurtain)
         {
-            onLoaded?.Invoke();
-            return;
+            _loadingCurtain = loadingCurtain;
         }
 
-        AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(sceneName);
-        _loadingCurtain.EnableLoadingCurtain();
+        public async UniTaskVoid LoadScene(string sceneName, Action onLoaded = null)
+        {
+            if (SceneManager.GetActiveScene().name == sceneName)
+            {
+                onLoaded?.Invoke();
+                return;
+            }
+
+            AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(sceneName);
+            _loadingCurtain.EnableLoadingCurtain();
         
-        await loadSceneAsync.ToUniTask();
+            await loadSceneAsync.ToUniTask();
         
-        _loadingCurtain.DisableLoadingCurtain();
-        onLoaded?.Invoke();
+            _loadingCurtain.DisableLoadingCurtain();
+            onLoaded?.Invoke();
+        }
     }
 }

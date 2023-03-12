@@ -1,4 +1,7 @@
-﻿public interface IState
+﻿namespace States
 {
-    public void Enter();
+    public interface IState
+    {
+        public void Enter();
+    }
 }

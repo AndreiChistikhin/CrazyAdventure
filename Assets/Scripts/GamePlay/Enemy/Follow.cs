@@ -1,5 +1,8 @@
 using UnityEngine;
 
-public class Follow : MonoBehaviour
+namespace GamePlay.Enemy
 {
+    public class Follow : MonoBehaviour
+    {
+    }
 }

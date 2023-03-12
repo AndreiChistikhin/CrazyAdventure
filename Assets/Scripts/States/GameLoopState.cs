@@ -1,6 +1,9 @@
-﻿internal class GameLoopState : IState
+﻿namespace States
 {
-    public void Enter()
+    internal class GameLoopState : IState
     {
+        public void Enter()
+        {
+        }
     }
 }

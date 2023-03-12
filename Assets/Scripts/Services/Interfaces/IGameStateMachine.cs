@@ -1,4 +1,9 @@
-﻿public interface IGameStateMachine : IService
+﻿using States;
+
+namespace Services.Interfaces
 {
-    void Enter<T>() where T : IState;
+    public interface IGameStateMachine : IService
+    {
+        void Enter<T>() where T : IState;
+    }
 }

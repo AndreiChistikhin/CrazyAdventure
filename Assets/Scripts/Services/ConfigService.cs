@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using Configs;
 using Cysharp.Threading.Tasks;
-using GamePlay.Configs;
+using Infrasctructure;
+using Services.Interfaces;
 
 namespace Services
 {
@@ -24,16 +25,21 @@ namespace Services
             return await _assetProvider.Load<WorldConfig>(AssetsAddress.WorldConfig);
         }
 
-        public async UniTask<LevelConfig> ForSpawners(string level)
+        public async UniTask<EnemyPositions> ForLevel(string level)
         {
-            SpawnersConfig spawnersConfig = await _assetProvider.Load<SpawnersConfig>(AssetsAddress.SpawnerConfig);
-            return spawnersConfig.LevelConfigs.FirstOrDefault(x => x.SceneName == level);
+            SpawnersConfig spawnersConfig = await _assetProvider.Load<SpawnersConfig>(AssetsAddress.EnemyConfig);
+            return spawnersConfig.EnemyPositions.FirstOrDefault(x => x.SceneName == level);
         }
 
         public async UniTask<WindowParameters> ForWindow(WindowId windowId)
         {
             WindowConfig spawnersConfig = await _assetProvider.Load<WindowConfig>(AssetsAddress.WindowConfig);
             return spawnersConfig.Windows.FirstOrDefault(x => x.WindowId == windowId);
+        }
+
+        public async UniTask<SpawnersConfig> ForSpawners()
+        {
+            return await _assetProvider.Load<SpawnersConfig>(AssetsAddress.EnemyConfig);
         }
     }
 }

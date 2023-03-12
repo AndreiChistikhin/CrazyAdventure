@@ -34,7 +34,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 7cf4ad6cc5139754095c1eac8bcfa424
-    m_Address: SpawnersConfig
+    m_Address: EnemyConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 257c304c754d3b247a51ef5bea7a90d0

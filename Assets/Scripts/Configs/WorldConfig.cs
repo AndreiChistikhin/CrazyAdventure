@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace GamePlay.Configs
+namespace Configs
 {
     [CreateAssetMenu(menuName = "Configs/World", fileName = "WorldConfig")]
-    
     public class WorldConfig : ScriptableObject
     {
         public string InitialLevelName;
-        public Vector3 InitialPosition;
+        public List<LevelStartingPointConfig> StartingPoints;
     }
 }

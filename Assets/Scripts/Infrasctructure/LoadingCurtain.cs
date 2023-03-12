@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-public class LoadingCurtain : MonoBehaviour
+namespace Infrasctructure
 {
-    private void Awake()
+    public class LoadingCurtain : MonoBehaviour
     {
-        DontDestroyOnLoad(this);
-    }
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
 
-    public void EnableLoadingCurtain()
-    {
-        gameObject.SetActive(true);
-    }
+        public void EnableLoadingCurtain()
+        {
+            gameObject.SetActive(true);
+        }
 
-    public void DisableLoadingCurtain()
-    {
-        gameObject.SetActive(false);
+        public void DisableLoadingCurtain()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

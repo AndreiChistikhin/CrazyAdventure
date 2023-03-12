@@ -1,8 +1,19 @@
 using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class EnemyProgress
+namespace Progress
 {
-    public List<string> ClearedSpawners = new List<string>();
+    [Serializable]
+    public class EnemyProgress
+    {
+        public List<string> ClearedSpawners = new List<string>();
+
+        public event Action EnemyWasKilled;
+    
+        public void AddKilledEnemy(string enemyID)
+        {
+            ClearedSpawners.Add(enemyID);
+            EnemyWasKilled?.Invoke();
+        }
+    }
 }

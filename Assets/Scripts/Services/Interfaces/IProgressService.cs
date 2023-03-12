@@ -1,4 +1,6 @@
-namespace Services
+using Progress;
+
+namespace Services.Interfaces
 {
     public interface IProgressService : IService
     {

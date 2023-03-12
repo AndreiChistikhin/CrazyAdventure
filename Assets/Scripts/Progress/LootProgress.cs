@@ -1,15 +1,19 @@
 using System;
+using GamePlay.Loot;
 
-[Serializable]
-public class LootProgress
+namespace Progress
 {
-    public int LootCount;
-
-    public event Action Changed;
-
-    public void Collect(Loot loot)
+    [Serializable]
+    public class LootProgress
     {
-        LootCount += loot.Value;
-        Changed?.Invoke();
+        public int LootCount;
+
+        public event Action Changed;
+
+        public void Collect(Loot loot)
+        {
+            LootCount += loot.Value;
+            Changed?.Invoke();
+        }
     }
 }

@@ -1,13 +1,16 @@
 using System;
 
-[Serializable]
-public class WorldProgress
+namespace Progress
 {
-    public string SceneToLoadName;
-    public Vector3Data PositionOnScene;
-
-    public WorldProgress()
+    [Serializable]
+    public class WorldProgress
     {
-        PositionOnScene = new Vector3Data ();
+        public string SceneToLoadName;
+        public Vector3Data PositionOnScene;
+
+        public WorldProgress()
+        {
+            PositionOnScene = new Vector3Data ();
+        }
     }
 }

@@ -1,18 +1,23 @@
+using Services.Interfaces;
+using States;
 using UnityEngine;
 using Zenject;
 
-public class Bootstrapper : MonoBehaviour
+namespace Infrasctructure
 {
-    private IGameStateMachine _stateMachine;
+    public class Bootstrapper : MonoBehaviour
+    {
+        private IGameStateMachine _stateMachine;
 
-    [Inject]
-    public void Construct(IGameStateMachine stateMachine)
-    {
-        _stateMachine = stateMachine;
-    }
+        [Inject]
+        public void Construct(IGameStateMachine stateMachine)
+        {
+            _stateMachine = stateMachine;
+        }
     
-    private void Awake()
-    {
-        _stateMachine.Enter<BootstrapState>();
+        private void Awake()
+        {
+            _stateMachine.Enter<BootstrapState>();
+        }
     }
 }

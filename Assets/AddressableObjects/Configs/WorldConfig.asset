@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: WorldConfig
   m_EditorClassIdentifier: 
   InitialLevelName: FirstLevelScene
-  InitialPosition: {x: 9, y: 1, z: -8}
+  StartingPoints:
+  - LevelName: FirstLevelScene
+    InitialPositionOnLevel: {x: 9, y: 2, z: -8}
+  - LevelName: SecondLevelScene
+    InitialPositionOnLevel: {x: 9, y: 2, z: -8}

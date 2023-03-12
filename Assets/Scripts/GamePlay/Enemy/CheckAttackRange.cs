@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class CheckAttackRange : MonoBehaviour
+namespace GamePlay.Enemy
 {
-    [SerializeField] private Attack _attack;
-    [SerializeField] private TriggerObserver _triggerObserver;
-
-    private void Start()
+    public class CheckAttackRange : MonoBehaviour
     {
-        _triggerObserver.TriggerEnter += TriggerEnter;
-        _triggerObserver.TriggerExit += TriggerExit;
+        [SerializeField] private Attack _attack;
+        [SerializeField] private TriggerObserver _triggerObserver;
 
-        _attack.DisableAttack();
-    }
+        private void Start()
+        {
+            _triggerObserver.TriggerEnter += TriggerEnter;
+            _triggerObserver.TriggerExit += TriggerExit;
 
-    private void TriggerEnter()
-    {
-        _attack.EnableAttack();
-    }
+            _attack.DisableAttack();
+        }
 
-    private void TriggerExit()
-    {
-        _attack.DisableAttack();
+        private void TriggerEnter()
+        {
+            _attack.EnableAttack();
+        }
+
+        private void TriggerExit()
+        {
+            _attack.DisableAttack();
+        }
     }
 }

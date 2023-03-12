@@ -1,27 +1,30 @@
-using System;
 using Services;
+using Services.Interfaces;
 using UnityEngine;
 using Zenject;
 
-public class GameSaver : MonoBehaviour
+namespace Progress
 {
-    private ISaveLoadService _saveLoadService;
-
-    [Inject]
-    private void Construct(ISaveLoadService saveLoadService)
+    public class GameSaver : MonoBehaviour
     {
-        _saveLoadService = saveLoadService;
-    }
+        private ISaveLoadService _saveLoadService;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        SaveGame();
-    }
+        [Inject]
+        private void Construct(ISaveLoadService saveLoadService)
+        {
+            _saveLoadService = saveLoadService;
+        }
 
-    private void SaveGame()
-    {
-        _saveLoadService.SaveProgress();
-        Debug.Log("Progress Saved");
-        gameObject.SetActive(false);
+        private void OnTriggerEnter(Collider other)
+        {
+            SaveGame();
+        }
+
+        private void SaveGame()
+        {
+            _saveLoadService.SaveProgress();
+            Debug.Log("Progress Saved");
+            gameObject.SetActive(false);
+        }
     }
 }
