@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Configs
 {
     [CreateAssetMenu(menuName = "Configs/Spawners", fileName = "Spawner")]
-    public class SpawnersConfig : ScriptableObject
+    public class EnemyConfig : ScriptableObject
     {
         public int MinimumLoot;
         public int MaximumLoot;

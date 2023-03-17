@@ -20,9 +20,9 @@ namespace GamePlay.Loot
             _gameProgress = gameProgress;
         }
         
-        public void Initialize(Loot loot) => _loot = loot;
-
         private void OnTriggerEnter(Collider other) => PickUp();
+        
+        public void SetLootAmount(Loot loot) => _loot = loot;
 
         private void PickUp()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Configs;
 using Cysharp.Threading.Tasks;
 using GamePlay.UI;
@@ -38,18 +39,22 @@ namespace Services
 
         public async UniTask CreateLoseGameMenu()
         {
-            WindowParameters config = await _staticData.ForWindow(WindowId.LoseGame);
-            GameObject window = Object.Instantiate(config.WindowPrefab, _uiRoot);
+            GameObject window = await CreateWindow(WindowId.LoseGame);
             _diContainer.Inject(window.GetComponent<LoseGameWindow>());
-            _instantiatedObjects.Add(window);
         }
 
         public async UniTask CreateWinGameMenu()
         {
-            WindowParameters config = await _staticData.ForWindow(WindowId.WinGame);
-            GameObject window = Object.Instantiate(config.WindowPrefab, _uiRoot);
+            GameObject window = await CreateWindow(WindowId.WinGame);
             window.GetComponent<WinGameWindow>().Construct(_progressService);
+        }
+
+        private async UniTask<GameObject> CreateWindow(WindowId windowId)
+        {
+            WindowParameters config = await _staticData.ForWindow(windowId);
+            GameObject window = Object.Instantiate(config.WindowPrefab, _uiRoot);
             _instantiatedObjects.Add(window);
+            return window;
         }
 
         public void CleanUp()

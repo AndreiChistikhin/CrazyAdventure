@@ -17,11 +17,6 @@ namespace GamePlay.HUD
             _gameProgress.LootProgress.Changed += UpdateCounter;
             UpdateCounter();
         }
-        
-        private void UpdateCounter()
-        {
-            _text.text = $"{_gameProgress.LootProgress.LootCount}";
-        }
 
         public void LoadProgress(GameProgress progress)
         {
@@ -31,6 +26,11 @@ namespace GamePlay.HUD
         public void SaveProgress(GameProgress progress)
         {
             progress.LootProgress.LootCount = Int32.Parse(_text.text);
+        }
+
+        private void UpdateCounter()
+        {
+            _text.text = $"{_gameProgress.LootProgress.LootCount}";
         }
     }
 }

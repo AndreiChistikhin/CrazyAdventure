@@ -10,17 +10,21 @@ namespace Services
     {
         private Dictionary<Type, IState> _states;
 
-        [Inject]
         public GameStateMachine(DiContainer diContainer)
         {
+            ISceneLoader sceneLoader = diContainer.Resolve<ISceneLoader>();
+            ISaveLoadService saveLoadService = diContainer.Resolve<ISaveLoadService>();
+            IProgressService progressService = diContainer.Resolve<IProgressService>();
+            IConfigService configService = diContainer.Resolve<IConfigService>();
+            IGameFactory gameFactory = diContainer.Resolve<IGameFactory>();
+            IUIFactory uiFactory = diContainer.Resolve<IUIFactory>();
+
             _states = new Dictionary<Type, IState>
             {
-                [typeof(BootstrapState)] = new BootstrapState(diContainer.Resolve<ISceneLoader>(), this),
-                [typeof(LoadProgressState)] = new LoadProgressState(diContainer.Resolve<IProgressService>(),
-                    diContainer.Resolve<ISaveLoadService>(), this, diContainer.Resolve<IConfigService>()),
-                [typeof(LoadLevelState)] = new LoadLevelState(diContainer.Resolve<IProgressService>(),
-                    diContainer.Resolve<ISceneLoader>(), diContainer.Resolve<IGameFactory>(), this,
-                    diContainer.Resolve<IConfigService>(), diContainer.Resolve<IUIFactory>()),
+                [typeof(BootstrapState)] = new BootstrapState(sceneLoader, this),
+                [typeof(LoadProgressState)] =
+                    new LoadProgressState(progressService, saveLoadService, configService, this),
+                [typeof(LoadLevelState)] = new LoadLevelState(progressService, sceneLoader, gameFactory, configService, uiFactory, this),
                 [typeof(GameLoopState)] = new GameLoopState()
             };
         }

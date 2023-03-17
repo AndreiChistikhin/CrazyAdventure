@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GamePlay.Enemy
@@ -6,13 +7,19 @@ namespace GamePlay.Enemy
     {
         [SerializeField] private Attack _attack;
         [SerializeField] private TriggerObserver _triggerObserver;
-
-        private void Start()
+        
+        private void OnEnable()
         {
             _triggerObserver.TriggerEnter += TriggerEnter;
             _triggerObserver.TriggerExit += TriggerExit;
 
             _attack.DisableAttack();
+        }
+
+        private void OnDisable()
+        {
+            _triggerObserver.TriggerEnter -= TriggerEnter;
+            _triggerObserver.TriggerExit -= TriggerExit;
         }
 
         private void TriggerEnter()

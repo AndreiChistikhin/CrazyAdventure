@@ -1,7 +1,9 @@
+using System;
 using GamePlay.Enemy;
 using Infrasctructure.Extensions;
 using Services.Interfaces;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GamePlay.Loot
 {
@@ -18,9 +20,14 @@ namespace GamePlay.Loot
             _factory = factory;
         }
         
-        private void Start()
+        private void OnEnable()
         {
             _enemyDeath.OnDeath += SpawnLoot;
+        }
+
+        private void OnDisable()
+        {
+            _enemyDeath.OnDeath -= SpawnLoot;
         }
 
         public void SetLoot(int min, int max)
@@ -39,7 +46,7 @@ namespace GamePlay.Loot
                 Value = Random.Range(_lootMin, _lootmax)
             };
             
-            loot.Initialize(lootItem);
+            loot.SetLootAmount(lootItem);
         }
     }
 }

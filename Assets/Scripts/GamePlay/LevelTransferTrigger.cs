@@ -1,8 +1,6 @@
-using System.Linq;
 using Configs;
 using GamePlay.Hero;
 using Infrasctructure.Extensions;
-using Services;
 using Services.Interfaces;
 using States;
 using UnityEngine;
@@ -37,10 +35,8 @@ namespace GamePlay
                 return;
 
             _progressService.GameProgress.WorldProgress.SceneToLoadName = _transfferTo;
-            WorldConfig worldConfig = await _configService.ForWorld();
-            _progressService.GameProgress.WorldProgress.PositionOnScene = worldConfig.StartingPoints
-                .FirstOrDefault(x => x.LevelName == _transfferTo)
-                ?.InitialPositionOnLevel.ToSerializedVector();
+            LevelStartingPoint levelStartConfig = await _configService.ForLevel(_transfferTo);
+            _progressService.GameProgress.WorldProgress.PositionOnScene = levelStartConfig.InitialPositionOnLevel.ToSerializedVector();
             _gameStateMachine.Enter<LoadLevelState>();
             _triggered = true;
         }

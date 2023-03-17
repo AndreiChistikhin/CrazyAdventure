@@ -7,6 +7,8 @@ namespace GamePlay.Hero
 {
     public class HeroHealth : MonoBehaviour, IHealth, IProgressHandler
     {
+        [SerializeField] private HeroAnimation _heroAnimation;
+        
         public float Maximum { get; set; }
         public float Current { get; set; }
 
@@ -15,6 +17,7 @@ namespace GamePlay.Hero
         public void TakeDamage(float damage)
         {
             Current -= damage;
+            _heroAnimation.PlayGetHit();
             HealthChanged?.Invoke();
         }
 

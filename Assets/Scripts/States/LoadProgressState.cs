@@ -15,7 +15,7 @@ namespace States
         private readonly IConfigService _configService;
 
         public LoadProgressState(IProgressService gameProgress, ISaveLoadService saveLoadService,
-            IGameStateMachine stateMachine, IConfigService configService)
+            IConfigService configService, IGameStateMachine stateMachine)
         {
             _gameProgress = gameProgress;
             _saveLoadService = saveLoadService;
@@ -43,17 +43,16 @@ namespace States
         {
             GameProgress gameProgress = new GameProgress();
             PlayerConfig playerConfig = await _configService.ForPlayer();
-            WorldConfig worldConfig = await _configService.ForWorld();
+            LevelStartConfig levelStartConfig = await _configService.ForWorld();
 
             gameProgress.LootProgress.LootCount = 0;
             gameProgress.PlayerProgress.Damage = playerConfig.Damage;
             gameProgress.PlayerProgress.MaxHp = playerConfig.MaxHealth;
             gameProgress.PlayerProgress.CurrentHp = playerConfig.MaxHealth;
-            gameProgress.WorldProgress.SceneToLoadName = worldConfig.InitialLevelName;
-            gameProgress.WorldProgress.PositionOnScene = worldConfig.StartingPoints
-                .FirstOrDefault(x => x.LevelName == worldConfig.InitialLevelName)
-                ?.InitialPositionOnLevel
-                .ToSerializedVector();
+            gameProgress.WorldProgress.SceneToLoadName = levelStartConfig.InitialLevelName;
+            LevelStartingPoint levelStartingPoint =
+                await _configService.ForLevel(gameProgress.WorldProgress.SceneToLoadName);
+            gameProgress.WorldProgress.PositionOnScene = levelStartingPoint.InitialPositionOnLevel.ToSerializedVector();
 
             return gameProgress;
         }

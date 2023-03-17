@@ -19,7 +19,7 @@ namespace States
         private IUIFactory _uiFactory;
 
         public LoadLevelState(IProgressService progressService, ISceneLoader sceneLoader, IGameFactory factory,
-            IGameStateMachine gameStateMachine, IConfigService configService, IUIFactory uiFactory)
+            IConfigService configService, IUIFactory uiFactory, IGameStateMachine gameStateMachine)
         {
             _progressService = progressService;
             _sceneLoader = sceneLoader;
@@ -32,7 +32,6 @@ namespace States
         public void Enter()
         {
             _factory.CleanUp();
-            _factory.Warmup();
             _uiFactory.CleanUp();
             _sceneLoader.LoadScene(_progressService.GameProgress.WorldProgress.SceneToLoadName, OnLoaded);
         }
@@ -67,7 +66,7 @@ namespace States
 
         private async UniTask InitSpawners()
         {
-            EnemyPositions enemyPositions = await _configService.ForLevel(SceneManager.GetActiveScene().name);
+            EnemyPositions enemyPositions = await _configService.ForEnemyPositions(SceneManager.GetActiveScene().name);
             foreach (EnemySpawner enemySpawner in enemyPositions.EnemySpawner)
             {
                 if (_progressService.GameProgress.EnemyProgress.ClearedSpawners.Contains(enemySpawner.EnemyId))

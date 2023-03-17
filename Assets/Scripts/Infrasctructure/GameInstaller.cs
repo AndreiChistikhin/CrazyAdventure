@@ -23,7 +23,7 @@ namespace Infrasctructure
 
         private void InstallLoadingObjects()
         {
-            Container.Bind<LoadingCurtain>().FromInstance(_loadingCurtain).AsSingle();
+            Container.Bind<LoadingCurtain>().FromComponentInNewPrefab(_loadingCurtain).AsSingle();
         }
 
         private void InstallServices()

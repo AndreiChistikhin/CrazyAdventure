@@ -17,7 +17,7 @@ namespace GamePlay.Enemy
         private bool _isAttacking;
         private int _layerMask;
         private Collider[] _hits = new Collider[1];
-        private bool _attackIsActive;
+        private bool _attackRangeIsReached;
 
         public void Construct(Transform heroTransform)
         {
@@ -33,9 +33,8 @@ namespace GamePlay.Enemy
         {
             UpdateCoolDown();
 
-            if (!_isAttacking && CoolDownIsUp() && _attackIsActive)
+            if (!_isAttacking && CoolDownIsUp() && _attackRangeIsReached)
             {
-                Debug.Log("StartAttack");
                 StartAttack();
             }
         }
@@ -56,27 +55,12 @@ namespace GamePlay.Enemy
 
         public void EnableAttack()
         {
-            _attackIsActive = true;
+            _attackRangeIsReached = true;
         }
 
         public void DisableAttack()
         {
-            _attackIsActive = false;
-        }
-
-        private bool Hit(out Collider hit)
-        {
-            int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
-
-            hit = _hits.FirstOrDefault();
-
-            return hitsCount > 0;
-        }
-
-        private Vector3 StartPoint()
-        {
-            return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-                   transform.forward * EffectiveDistance;
+            _attackRangeIsReached = false;
         }
 
         private void UpdateCoolDown()
@@ -96,6 +80,21 @@ namespace GamePlay.Enemy
             Animator.PlayAttack();
 
             _isAttacking = true;
+        }
+
+        private bool Hit(out Collider hit)
+        {
+            int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
+
+            hit = _hits.FirstOrDefault();
+
+            return hitsCount > 0;
+        }
+
+        private Vector3 StartPoint()
+        {
+            return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
+                   transform.forward * EffectiveDistance;
         }
     }
 }

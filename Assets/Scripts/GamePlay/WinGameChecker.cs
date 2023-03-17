@@ -33,7 +33,7 @@ namespace GamePlay
     
         private async void CheckIfAllEnemiesDefeated()
         {
-            EnemyPositions enemyPositions = await _configService.ForLevel(LastLevelName);
+            EnemyPositions enemyPositions = await _configService.ForEnemyPositions(LastLevelName);
             foreach (EnemySpawner enemySpawner in enemyPositions.EnemySpawner)
             {
                 if (!_progressService.GameProgress.EnemyProgress.ClearedSpawners.Contains(enemySpawner.EnemyId))

@@ -28,7 +28,7 @@ namespace GamePlay.Hero
             if (_inputService == null)
                 return;
 
-            if (_inputService.IsAttacking && !_heroAnimation.IsAttacking)
+            if (_inputService.IsAttacking)
                 _heroAnimation.PlayAttack();
         }
 

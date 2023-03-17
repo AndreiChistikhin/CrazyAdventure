@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Configs
 {
     [Serializable]
-    public class LevelStartingPointConfig
+    public class LevelStartingPoint
     {
         public string LevelName;
         public Vector3 InitialPositionOnLevel;

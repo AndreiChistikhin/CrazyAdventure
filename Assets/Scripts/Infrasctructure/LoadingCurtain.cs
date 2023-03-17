@@ -4,6 +4,8 @@ namespace Infrasctructure
 {
     public class LoadingCurtain : MonoBehaviour
     {
+        [SerializeField] private GameObject _loadingCurtain;
+        
         private void Awake()
         {
             DontDestroyOnLoad(this);
@@ -11,12 +13,12 @@ namespace Infrasctructure
 
         public void EnableLoadingCurtain()
         {
-            gameObject.SetActive(true);
+            _loadingCurtain.SetActive(true);
         }
 
         public void DisableLoadingCurtain()
         {
-            gameObject.SetActive(false);
+            _loadingCurtain.SetActive(false);
         }
     }
 }

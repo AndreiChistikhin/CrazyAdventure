@@ -20,15 +20,21 @@ namespace Services
             return await _assetProvider.Load<PlayerConfig>(AssetsAddress.PlayerConfig);
         }
 
-        public async UniTask<WorldConfig> ForWorld()
+        public async UniTask<LevelStartConfig> ForWorld()
         {
-            return await _assetProvider.Load<WorldConfig>(AssetsAddress.WorldConfig);
+            return await _assetProvider.Load<LevelStartConfig>(AssetsAddress.WorldConfig);
+        }
+        
+        public async UniTask<LevelStartingPoint> ForLevel(string levelName)
+        {
+            LevelStartConfig levelStartConfig = await _assetProvider.Load<LevelStartConfig>(AssetsAddress.WorldConfig);
+            return levelStartConfig.StartingPoints.FirstOrDefault(x => x.LevelName == levelName);
         }
 
-        public async UniTask<EnemyPositions> ForLevel(string level)
+        public async UniTask<EnemyPositions> ForEnemyPositions(string level)
         {
-            SpawnersConfig spawnersConfig = await _assetProvider.Load<SpawnersConfig>(AssetsAddress.EnemyConfig);
-            return spawnersConfig.EnemyPositions.FirstOrDefault(x => x.SceneName == level);
+            EnemyConfig enemyConfig = await _assetProvider.Load<EnemyConfig>(AssetsAddress.EnemyConfig);
+            return enemyConfig.EnemyPositions.FirstOrDefault(x => x.SceneName == level);
         }
 
         public async UniTask<WindowParameters> ForWindow(WindowId windowId)
@@ -37,9 +43,9 @@ namespace Services
             return spawnersConfig.Windows.FirstOrDefault(x => x.WindowId == windowId);
         }
 
-        public async UniTask<SpawnersConfig> ForSpawners()
+        public async UniTask<EnemyConfig> ForSpawners()
         {
-            return await _assetProvider.Load<SpawnersConfig>(AssetsAddress.EnemyConfig);
+            return await _assetProvider.Load<EnemyConfig>(AssetsAddress.EnemyConfig);
         }
     }
 }

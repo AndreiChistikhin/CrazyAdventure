@@ -13,12 +13,12 @@ namespace GamePlay.Enemy
     
         public event Action OnDeath;
     
-        private void Start()
+        private void OnEnable()
         {
             _health.HealthChanged += HealthChanged;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _health.HealthChanged -= HealthChanged;
         }
@@ -31,8 +31,6 @@ namespace GamePlay.Enemy
 
         private void Die()
         {
-            _health.HealthChanged -= HealthChanged;
-
             _animator.PlayDeath();
 
             _enemyMove.enabled = false;

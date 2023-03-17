@@ -11,12 +11,18 @@ namespace GamePlay.Enemy
         
         private Coroutine _aggroCoroutine;
         private bool _hasAggroTarget;
-
-        private void Start()
+        
+        private void OnEnable()
         {
             _triggerObserver.TriggerEnter += TriggerEnter;
             _triggerObserver.TriggerExit += TriggerExit;
-            
+            TurnFollowOff();
+        }
+
+        private void OnDisable()
+        {
+            _triggerObserver.TriggerEnter -= TriggerEnter;
+            _triggerObserver.TriggerExit -= TriggerExit;
             TurnFollowOff();
         }
 

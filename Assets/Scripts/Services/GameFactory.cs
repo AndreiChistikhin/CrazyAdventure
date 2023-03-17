@@ -16,28 +16,24 @@ namespace Services
     public class GameFactory : IGameFactory
     {
         private readonly IAssetProvider _assetProvider;
-        private readonly DiContainer _diContainer;
         private readonly IProgressService _progressService;
         private readonly IConfigService _configService;
+        private readonly DiContainer _diContainer;
         public List<IProgressHandler> ProgressHandlers { get; } = new List<IProgressHandler>();
 
         private List<GameObject> _listOfInstantiatedObjects = new List<GameObject>();
         private GameObject _player;
-        private SpawnersConfig _spawnersConfig;
+        private EnemyConfig _enemyConfig;
 
-        public GameFactory(IAssetProvider assetProvider, DiContainer diContainer, IProgressService progressService,
-            IConfigService configService)
+        public GameFactory(IAssetProvider assetProvider, IProgressService progressService, IConfigService configService,
+            DiContainer diContainer)
         {
             _assetProvider = assetProvider;
-            _diContainer = diContainer;
             _progressService = progressService;
             _configService = configService;
+            _diContainer = diContainer;
         }
-
-        public void Warmup()
-        {
-        }
-
+        
         public void CleanUp()
         {
             ProgressHandlers.Clear();
@@ -65,7 +61,7 @@ namespace Services
 
         public async UniTask CreateEnemy(EnemySpawner spawner, string enemyId)
         {
-            _spawnersConfig = await _configService.ForSpawners();
+            _enemyConfig = await _configService.ForSpawners();
             GameObject enemy = await InstantiateRegistered(AssetsAddress.Enemy, spawner.SpawnPosition);
             enemy.GetComponent<EnemyMoveToPlayer>().Construct(_player.transform);
             enemy.GetComponent<ActorUI>().Construct(enemy.GetComponent<IHealth>());
@@ -73,7 +69,7 @@ namespace Services
 
             LootSpawner lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
             lootSpawner.Construct(this);
-            lootSpawner.SetLoot(_spawnersConfig.MinimumLoot, _spawnersConfig.MaximumLoot);
+            lootSpawner.SetLoot(_enemyConfig.MinimumLoot, _enemyConfig.MaximumLoot);
             enemy.GetComponent<EnemyDeath>().OnDeath +=
                 () => _progressService.GameProgress.EnemyProgress.AddKilledEnemy(enemyId);
         }
@@ -81,11 +77,10 @@ namespace Services
         public async UniTask<LootPiece> CreateLoot()
         {
             GameObject prefab = await InstantiateRegistered(AssetsAddress.Loot);
-            LootPiece lootPiece = prefab.GetComponent<LootPiece>();
 
-            lootPiece.Construct(_progressService.GameProgress);
+            prefab.GetComponent<LootPiece>().Construct(_progressService.GameProgress);
 
-            return lootPiece;
+            return prefab.GetComponent<LootPiece>();
         }
 
         private async UniTask<GameObject> InstantiateRegistered(string path, Vector3 position = default)
