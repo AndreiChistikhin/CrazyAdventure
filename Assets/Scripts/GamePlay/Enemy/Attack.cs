@@ -6,11 +6,11 @@ namespace GamePlay.Enemy
 {
     public class Attack : MonoBehaviour
     {
-        [SerializeField] private EnemyAnimation Animator;
-        [SerializeField] private float AttackCoolDown = 3f;
-        [SerializeField] private float Cleavage = 0.5f;
-        [SerializeField] private float EffectiveDistance = 0.5f;
-        [SerializeField] private float Damage;
+        [SerializeField] private EnemyAnimation _animator;
+        [SerializeField] private float _attackCoolDown = 3f;
+        [SerializeField] private float _cleavage = 0.5f;
+        [SerializeField] private float _effectiveDistance = 0.5f;
+        [SerializeField] private float _damage;
 
         private Transform _heroTransform;
         private float _currentAttackCoolDown;
@@ -19,11 +19,12 @@ namespace GamePlay.Enemy
         private Collider[] _hits = new Collider[1];
         private bool _attackRangeIsReached;
 
-        public void Construct(Transform heroTransform)
+        public void Construct(Transform heroTransform, float damage)
         {
             _heroTransform = heroTransform;
+            _damage = damage;
         }
-
+        
         private void Awake()
         {
             _layerMask = 1 << LayerMask.NameToLayer("Player");
@@ -43,13 +44,13 @@ namespace GamePlay.Enemy
         {
             if (Hit(out Collider hit))
             {
-                hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+                hit.transform.GetComponent<IHealth>().TakeDamage(_damage);
             }
         }
 
         private void OnAttackEnded()
         {
-            _currentAttackCoolDown = AttackCoolDown;
+            _currentAttackCoolDown = _attackCoolDown;
             _isAttacking = false;
         }
 
@@ -77,14 +78,14 @@ namespace GamePlay.Enemy
         private void StartAttack()
         {
             transform.LookAt(_heroTransform);
-            Animator.PlayAttack();
+            _animator.PlayAttack();
 
             _isAttacking = true;
         }
 
         private bool Hit(out Collider hit)
         {
-            int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
+            int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), _cleavage, _hits, _layerMask);
 
             hit = _hits.FirstOrDefault();
 
@@ -94,7 +95,7 @@ namespace GamePlay.Enemy
         private Vector3 StartPoint()
         {
             return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-                   transform.forward * EffectiveDistance;
+                   transform.forward * _effectiveDistance;
         }
     }
 }

@@ -34,11 +34,11 @@ namespace GamePlay
             if (!other.gameObject.TryGetComponent(out PlayerMovement player))
                 return;
 
+            _triggered = true;
             _progressService.GameProgress.WorldProgress.SceneToLoadName = _transfferTo;
             LevelStartingPoint levelStartConfig = await _configService.ForLevel(_transfferTo);
             _progressService.GameProgress.WorldProgress.PositionOnScene = levelStartConfig.InitialPositionOnLevel.ToSerializedVector();
             _gameStateMachine.Enter<LoadLevelState>();
-            _triggered = true;
         }
     }
 }

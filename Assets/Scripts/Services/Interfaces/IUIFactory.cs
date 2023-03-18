@@ -7,6 +7,5 @@ namespace Services.Interfaces
         UniTask CreateUIRoot();
         UniTask CreateLoseGameMenu();
         UniTask CreateWinGameMenu();
-        void CleanUp();
     }
 }

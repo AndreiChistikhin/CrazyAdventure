@@ -19,8 +19,6 @@ namespace Services
 
         private Transform _uiRoot;
 
-        private List<GameObject> _instantiatedObjects = new List<GameObject>();
-
         public UIFactory(IAssetProvider assets, IConfigService staticData,
             IProgressService progressService, DiContainer diContainer)
         {
@@ -34,7 +32,6 @@ namespace Services
         {
             GameObject instantiate = await _assets.Instantiate(AssetsAddress.UIRootPath);
             _uiRoot = instantiate.transform;
-            _instantiatedObjects.Add(instantiate);
         }
 
         public async UniTask CreateLoseGameMenu()
@@ -53,16 +50,7 @@ namespace Services
         {
             WindowParameters config = await _staticData.ForWindow(windowId);
             GameObject window = Object.Instantiate(config.WindowPrefab, _uiRoot);
-            _instantiatedObjects.Add(window);
             return window;
-        }
-
-        public void CleanUp()
-        {
-            foreach (GameObject gameObject in _instantiatedObjects)
-            {
-                Object.Destroy(gameObject);
-            }
         }
     }
 }

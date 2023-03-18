@@ -21,9 +21,7 @@ namespace Services
         private readonly DiContainer _diContainer;
         public List<IProgressHandler> ProgressHandlers { get; } = new List<IProgressHandler>();
 
-        private List<GameObject> _listOfInstantiatedObjects = new List<GameObject>();
         private GameObject _player;
-        private EnemyConfig _enemyConfig;
 
         public GameFactory(IAssetProvider assetProvider, IProgressService progressService, IConfigService configService,
             DiContainer diContainer)
@@ -37,13 +35,12 @@ namespace Services
         public void CleanUp()
         {
             ProgressHandlers.Clear();
-            DestroyAllInstantiatedObjects();
             _assetProvider.CleanUp();
         }
 
         public async UniTask<GameObject> CreatePlayer()
         {
-            _player = await InstantiateRegistered(AssetsAddress.Player);
+            _player = await InstantiateRegisteredAsync(AssetsAddress.Player);
             _diContainer.Inject(_player.GetComponent<PlayerMovement>());
             _diContainer.Inject(_player.GetComponent<HeroAttack>());
             _diContainer.Inject(_player.GetComponent<HeroDeath>());
@@ -52,7 +49,7 @@ namespace Services
 
         public async UniTask<GameObject> CreateHUD()
         {
-            GameObject hud = await InstantiateRegistered(AssetsAddress.HUD);
+            GameObject hud = await InstantiateRegisteredAsync(AssetsAddress.HUD);
 
             hud.GetComponentInChildren<LootCount>().Construct(_progressService.GameProgress);
 
@@ -61,50 +58,63 @@ namespace Services
 
         public async UniTask CreateEnemy(EnemySpawner spawner, string enemyId)
         {
-            _enemyConfig = await _configService.ForSpawners();
-            GameObject enemy = await InstantiateRegistered(AssetsAddress.Enemy, spawner.SpawnPosition);
-            enemy.GetComponent<EnemyMoveToPlayer>().Construct(_player.transform);
-            enemy.GetComponent<ActorUI>().Construct(enemy.GetComponent<IHealth>());
-            enemy.GetComponent<Attack>().Construct(_player.transform);
+            EnemyConfig enemyConfig = await _configService.ForSpawners();
+            
+            GameObject prefab = await _assetProvider.Load<GameObject>(AssetsAddress.Enemy);
+            GameObject enemy = Object.Instantiate(prefab, spawner.SpawnPosition, Quaternion.identity);
+            
+            enemy.GetComponent<EnemyMoveToPlayer>()?.Construct(_player.transform);
+            
+            IHealth health = enemy.GetComponent<IHealth>();
+            health.Maximum = enemyConfig.EnemyInitialHealth;
+            health.Current = enemyConfig.EnemyInitialHealth;
+            enemy.GetComponent<ActorUI>()?.Construct(enemy.GetComponent<IHealth>());
+            
+            enemy.GetComponent<Attack>()?.Construct(_player.transform, enemyConfig.EnemyDamage);
+            
 
             LootSpawner lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
             lootSpawner.Construct(this);
-            lootSpawner.SetLoot(_enemyConfig.MinimumLoot, _enemyConfig.MaximumLoot);
+            lootSpawner.SetLoot(enemyConfig.MinimumLoot, enemyConfig.MaximumLoot);
             enemy.GetComponent<EnemyDeath>().OnDeath +=
                 () => _progressService.GameProgress.EnemyProgress.AddKilledEnemy(enemyId);
         }
 
         public async UniTask<LootPiece> CreateLoot()
         {
-            GameObject prefab = await InstantiateRegistered(AssetsAddress.Loot);
+            GameObject prefab = await _assetProvider.Load<GameObject>(AssetsAddress.Loot);
+            LootPiece lootPiece = InstantiateRegistered(prefab).GetComponent<LootPiece>();
 
-            prefab.GetComponent<LootPiece>().Construct(_progressService.GameProgress);
+            lootPiece.Construct(_progressService.GameProgress);
 
-            return prefab.GetComponent<LootPiece>();
+            return lootPiece;
         }
 
-        private async UniTask<GameObject> InstantiateRegistered(string path, Vector3 position = default)
+        private async UniTask<GameObject> InstantiateRegisteredAsync(string path, Vector3 position = default)
         {
             GameObject gameObject = await _assetProvider.Instantiate(path);
             gameObject.transform.position = position;
-            foreach (IProgressHandler progressHandler in gameObject.GetComponentsInChildren<IProgressHandler>())
-            {
-                ProgressHandlers.Add(progressHandler);
-            }
-
-            _listOfInstantiatedObjects.Add(gameObject);
+            RegisterProgressWatchers(gameObject);
 
             return gameObject;
         }
 
-        private void DestroyAllInstantiatedObjects()
+        private GameObject InstantiateRegistered(GameObject prefab, Vector3 position = default)
         {
-            foreach (GameObject instantiatedObject in _listOfInstantiatedObjects)
-            {
-                Object.Destroy(instantiatedObject);
-            }
+            GameObject gameObject = Object.Instantiate(prefab);
+            gameObject.transform.position = position;
 
-            _listOfInstantiatedObjects.Clear();
+            RegisterProgressWatchers(gameObject);
+
+            return gameObject;
+        }
+
+        private void RegisterProgressWatchers(GameObject gameObject)
+        {
+            foreach (IProgressHandler progressHandler in gameObject.GetComponentsInChildren<IProgressHandler>())
+            {
+                ProgressHandlers.Add(progressHandler);
+            }
         }
     }
 }

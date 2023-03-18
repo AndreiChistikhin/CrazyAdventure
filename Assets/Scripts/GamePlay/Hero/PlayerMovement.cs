@@ -12,12 +12,17 @@ namespace GamePlay.Hero
         [SerializeField] private float _movementSpeed;
 
         private IInputService _inputService;
+        private Camera _camera;
+
 
         [Inject]
         public void Construct(IInputService inputService)
         {
             _inputService = inputService;
         }
+        
+        private void Start() =>
+            _camera = Camera.main;
 
         private void Update()
         {
@@ -28,13 +33,7 @@ namespace GamePlay.Hero
 
             if (_inputService.Axis.magnitude > Constants.Epsilon)
             {
-                if (Camera.main == null)
-                {
-                    Debug.LogError("Нет мейн кармеры");
-                    return;
-                }
-            
-                movementDirection = Camera.main.transform.TransformDirection(_inputService.Axis);
+                movementDirection = _camera.transform.TransformDirection(_inputService.Axis);
                 movementDirection.y = 0;
                 movementDirection.Normalize();
                 transform.forward = movementDirection;

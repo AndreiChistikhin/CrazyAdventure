@@ -479,11 +479,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a58e61fbb04b2d86ae578ba8a1d1e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 2230013044902527596}
-  AttackCoolDown: 2
-  Cleavage: 1
-  EffectiveDistance: 1
-  Damage: 1
+  _animator: {fileID: 2230013044902527596}
+  _attackCoolDown: 3
+  _cleavage: 0.5
+  _effectiveDistance: 0.5
+  _damage: 0
 --- !u!114 &6219133111963050680
 MonoBehaviour:
   m_ObjectHideFlags: 0

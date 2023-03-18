@@ -15,7 +15,17 @@ namespace Services
 
         private Dictionary<string, List<AsyncOperationHandle>> _handles =
             new Dictionary<string, List<AsyncOperationHandle>>();
-        
+
+        public AssetProvider()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            Addressables.InitializeAsync();
+        }
+
         public async Task<T> Load<T>(string address) where T : class
         {
             if (_completedCache.TryGetValue(address, out AsyncOperationHandle completedHandle))
@@ -24,6 +34,7 @@ namespace Services
             return await RunWithCacheOnComplete(Addressables.LoadAssetAsync<T>(address),
                 address);
         }
+
 
         public async UniTask<GameObject> Instantiate(string address) => await Addressables.InstantiateAsync(address).Task;
         

@@ -16,6 +16,9 @@ namespace GamePlay.Hero
         
         public void TakeDamage(float damage)
         {
+            if(Current <= 0)
+                return;
+            
             Current -= damage;
             _heroAnimation.PlayGetHit();
             HealthChanged?.Invoke();

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077044fe98984c340a363ab168c087a5, type: 3}
   m_Name: EnemyConfig
   m_EditorClassIdentifier: 
+  EnemyInitialHealth: 4
+  EnemyDamage: 1
   MinimumLoot: 1
   MaximumLoot: 5
-  EnemyDamage: 1
   EnemyPositions:
   - SceneName: FirstLevelScene
     EnemySpawner:

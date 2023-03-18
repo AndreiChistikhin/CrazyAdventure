@@ -11,8 +11,7 @@ namespace Services
     public class SceneLoader : ISceneLoader
     {
         private LoadingCurtain _loadingCurtain;
-
-        [Inject]
+        
         public SceneLoader(LoadingCurtain loadingCurtain)
         {
             _loadingCurtain = loadingCurtain;

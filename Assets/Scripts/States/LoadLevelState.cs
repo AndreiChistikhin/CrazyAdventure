@@ -32,7 +32,6 @@ namespace States
         public void Enter()
         {
             _factory.CleanUp();
-            _uiFactory.CleanUp();
             _sceneLoader.LoadScene(_progressService.GameProgress.WorldProgress.SceneToLoadName, OnLoaded);
         }
 
