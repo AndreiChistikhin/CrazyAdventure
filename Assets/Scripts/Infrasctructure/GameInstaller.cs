@@ -38,6 +38,7 @@ namespace Infrasctructure
             Container.Bind<IConfigService>().To<ConfigService>().AsSingle();
             Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
             Container.Bind<IWindowService>().To<WindowService>().AsSingle();
+            Container.Bind<IServerRequester>().To<ServerRequester>().AsSingle();
         }
     }
 }

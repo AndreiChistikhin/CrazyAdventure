@@ -1,8 +1,11 @@
+using System;
+using System.Threading.Tasks;
 using Configs;
 using Cysharp.Threading.Tasks;
 using GamePlay;
 using GamePlay.HUD;
 using Progress;
+using Services;
 using Services.Interfaces;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,10 +20,13 @@ namespace States
         private readonly IConfigService _configService;
         private IGameFactory _factory;
         private IUIFactory _uiFactory;
+        private IServerRequester _serverRequester;
 
         public LoadLevelState(IProgressService progressService, ISceneLoader sceneLoader, IGameFactory factory,
-            IConfigService configService, IUIFactory uiFactory, IGameStateMachine gameStateMachine)
+            IConfigService configService, IUIFactory uiFactory, IServerRequester serverRequester,
+            IGameStateMachine gameStateMachine)
         {
+            _serverRequester = serverRequester;
             _progressService = progressService;
             _sceneLoader = sceneLoader;
             _gameStateMachine = gameStateMachine;
@@ -38,15 +44,22 @@ namespace States
         private async void OnLoaded()
         {
             await InitUIRoot();
+            await CheckAuthorization();
             await InitWorld();
             InformProgressReaders();
 
             _gameStateMachine.Enter<GameLoopState>();
         }
-    
+
         private async UniTask InitUIRoot()
         {
             await _uiFactory.CreateUIRoot();
+        }
+
+        private async UniTask CheckAuthorization()
+        {
+            if (String.IsNullOrEmpty(_serverRequester.Token))
+                await _uiFactory.CreateLoginRegisterWindow();
         }
 
         private async UniTask InitWorld()

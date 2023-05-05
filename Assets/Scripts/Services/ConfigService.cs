@@ -39,8 +39,8 @@ namespace Services
 
         public async UniTask<WindowParameters> ForWindow(WindowId windowId)
         {
-            WindowConfig spawnersConfig = await _assetProvider.Load<WindowConfig>(AssetsAddress.WindowConfig);
-            return spawnersConfig.Windows.FirstOrDefault(x => x.WindowId == windowId);
+            WindowConfig windowConfig = await _assetProvider.Load<WindowConfig>(AssetsAddress.WindowConfig);
+            return windowConfig.Windows.FirstOrDefault(x => x.WindowId == windowId);
         }
 
         public async UniTask<EnemyConfig> ForSpawners()

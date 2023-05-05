@@ -12,7 +12,7 @@ namespace Services
 
         public GameStateMachine(ISceneLoader sceneLoader, ISaveLoadService saveLoadService,
             IProgressService progressService, IConfigService configService, IGameFactory gameFactory,
-            IUIFactory uiFactory)
+            IUIFactory uiFactory, IServerRequester serverRequester)
         {
             _states = new Dictionary<Type, IState>
             {
@@ -20,7 +20,7 @@ namespace Services
                 [typeof(LoadProgressState)] =
                     new LoadProgressState(progressService, saveLoadService, configService, this),
                 [typeof(LoadLevelState)] = new LoadLevelState(progressService, sceneLoader, gameFactory, configService,
-                    uiFactory, this),
+                    uiFactory, serverRequester, this),
                 [typeof(GameLoopState)] = new GameLoopState()
             };
         }

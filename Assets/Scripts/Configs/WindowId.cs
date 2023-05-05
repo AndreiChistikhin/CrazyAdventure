@@ -4,6 +4,7 @@ namespace Configs
     {
         Unknown = 0,
         LoseGame = 1,
-        WinGame = 2
+        WinGame = 2,
+        LoginRegister =3
     }
 }

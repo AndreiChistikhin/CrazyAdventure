@@ -20,14 +20,14 @@ namespace Services
         private Transform _uiRoot;
 
         public UIFactory(IAssetProvider assets, IConfigService staticData,
-            IProgressService progressService, DiContainer diContainer)
+            IProgressService progressService, IServerRequester serverRequester, DiContainer diContainer)
         {
             _assets = assets;
             _staticData = staticData;
             _progressService = progressService;
             _diContainer = diContainer;
         }
-    
+
         public async UniTask CreateUIRoot()
         {
             GameObject instantiate = await _assets.Instantiate(AssetsAddress.UIRootPath);
@@ -43,7 +43,13 @@ namespace Services
         public async UniTask CreateWinGameMenu()
         {
             GameObject window = await CreateWindow(WindowId.WinGame);
-            window.GetComponent<WinGameWindow>().Construct(_progressService);
+            _diContainer.Inject(window.GetComponent<WinGameWindow>());
+        }
+
+        public async UniTask CreateLoginRegisterWindow()
+        {
+            GameObject window = await CreateWindow(WindowId.LoginRegister);
+            _diContainer.Inject(window.GetComponent<LoginRegisterWindow>());
         }
 
         private async UniTask<GameObject> CreateWindow(WindowId windowId)

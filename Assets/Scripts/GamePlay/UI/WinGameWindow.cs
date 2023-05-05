@@ -2,6 +2,7 @@ using Services.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace GamePlay.UI
 {
@@ -12,6 +13,7 @@ namespace GamePlay.UI
 
         private IProgressService _progressService;
 
+        [Inject]
         public void Construct(IProgressService progressService)
         {
             _progressService = progressService;
