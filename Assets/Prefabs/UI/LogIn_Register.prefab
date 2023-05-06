@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 5292951186171509209}
   - component: {fileID: 5292951186171509208}
   m_Layer: 5
-  m_Name: LogInButton
+  m_Name: ChangePageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1847,7 +1847,8 @@ GameObject:
   - component: {fileID: 5292951186578664012}
   - component: {fileID: 5292951186578664014}
   - component: {fileID: 5292951186578664013}
-  - component: {fileID: 2871192614252602479}
+  - component: {fileID: 4905916382594620862}
+  - component: {fileID: 6426240746112310108}
   m_Layer: 5
   m_Name: Register
   m_TagString: Untagged
@@ -1919,7 +1920,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2871192614252602479
+--- !u!114 &4905916382594620862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1928,14 +1929,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 5292951186578664003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af1bc18bf2144683a17fa2fe0e419a30, type: 3}
+  m_Script: {fileID: 11500000, guid: d734f563ce2f4458a6249b8d9018e9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _userName: {fileID: 5292951186156001589}
   _password: {fileID: 5292951186445551451}
   _sendButton: {fileID: 131433956670603445}
-  _changeToRegisterButton: {fileID: 5292951188288250570}
   _errorText: {fileID: 6856684589581256884}
+--- !u!114 &6426240746112310108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292951186578664003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a56d8149e3de5c2499b986102b482170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pageChangeButton: {fileID: 5292951188288250570}
+  _pageToShow: {fileID: 5292951186963559204}
 --- !u!1 &5292951186610114464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,7 +2613,8 @@ GameObject:
   - component: {fileID: 5292951186963559205}
   - component: {fileID: 5292951186963559207}
   - component: {fileID: 5292951186963559206}
-  - component: {fileID: 1057863438604235528}
+  - component: {fileID: 6905768053731569309}
+  - component: {fileID: 8274655499950374635}
   m_Layer: 5
   m_Name: LogIn
   m_TagString: Untagged
@@ -2672,7 +2687,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1057863438604235528
+--- !u!114 &6905768053731569309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2681,14 +2696,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 5292951186963559204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e563707899164f7fa8d0ce23f58d3d34, type: 3}
+  m_Script: {fileID: 11500000, guid: d734f563ce2f4458a6249b8d9018e9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _userName: {fileID: 5292951188117858947}
   _password: {fileID: 5292951187908110197}
-  _sendButton: {fileID: 6608272832887538324}
-  _changeToRegisterButton: {fileID: 5292951186171509208}
+  _sendButton: {fileID: 1145778008041615499}
   _errorText: {fileID: 6121924780276479745}
+--- !u!114 &8274655499950374635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292951186963559204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a56d8149e3de5c2499b986102b482170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pageChangeButton: {fileID: 5292951186171509208}
+  _pageToShow: {fileID: 5292951186578664003}
 --- !u!1 &5292951186979341846
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,8 +3091,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72aac203469841ec9ca53b0136baafa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logInWindow: {fileID: 1057863438604235528}
-  _registerInWindow: {fileID: 2871192614252602479}
+  _logInWindow: {fileID: 6905768053731569309}
+  _registerInWindow: {fileID: 4905916382594620862}
 --- !u!1 &5292951187348538114
 GameObject:
   m_ObjectHideFlags: 0
@@ -4675,7 +4703,7 @@ GameObject:
   - component: {fileID: 5292951188288250571}
   - component: {fileID: 5292951188288250570}
   m_Layer: 5
-  m_Name: LogInButton
+  m_Name: ChangePageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
