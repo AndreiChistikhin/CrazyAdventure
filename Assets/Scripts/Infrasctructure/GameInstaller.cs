@@ -39,6 +39,7 @@ namespace Infrasctructure
             Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
             Container.Bind<IWindowService>().To<WindowService>().AsSingle();
             Container.Bind<IServerRequester>().To<ServerRequester>().AsSingle();
+            Container.Bind<ITimeChecker>().To<TimeChecker>().AsSingle();
         }
     }
 }

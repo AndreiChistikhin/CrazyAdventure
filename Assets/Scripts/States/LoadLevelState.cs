@@ -21,11 +21,14 @@ namespace States
         private IGameFactory _factory;
         private IUIFactory _uiFactory;
         private IServerRequester _serverRequester;
+        private ITimeChecker _timeChecker;
 
         public LoadLevelState(IProgressService progressService, ISceneLoader sceneLoader, IGameFactory factory,
             IConfigService configService, IUIFactory uiFactory, IServerRequester serverRequester,
+            ITimeChecker timeChecker,
             IGameStateMachine gameStateMachine)
         {
+            _timeChecker = timeChecker;
             _serverRequester = serverRequester;
             _progressService = progressService;
             _sceneLoader = sceneLoader;
@@ -47,6 +50,7 @@ namespace States
             await CheckAuthorization();
             await InitWorld();
             InformProgressReaders();
+            StartTimer();
 
             _gameStateMachine.Enter<GameLoopState>();
         }
@@ -93,6 +97,11 @@ namespace States
             {
                 progressHandler.LoadProgress(_progressService.GameProgress);
             }
+        }
+
+        private void StartTimer()
+        {
+            _timeChecker.StartTimer();
         }
 
         private void FollowCamera(GameObject hero)

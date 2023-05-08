@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrasctructure.Requests;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -32,11 +33,12 @@ namespace GamePlay.UI
         {
             Credentials credentials = new Credentials {UserName = _userName.text, Password = _password.text};
 
-            string token;
+            TokenResponse tokenResponse;
             try
             {
-                token = await _serverRequester.Post<string>(_serverAPI, credentials);
-                _serverRequester.Token = token;
+                tokenResponse = await _serverRequester.Post<TokenResponse>(_serverAPI, credentials);
+                _serverRequester.Token = tokenResponse.token;
+                gameObject.SetActive(false);
             }
             catch (Exception e)
             {
