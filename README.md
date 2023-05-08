@@ -2,8 +2,8 @@
 
 Проект был создан для демонстрации примеров кода и архитектуры, в проекте реализовано:
 1) Некоторое количество сервисов и их регистрация в Project Context (Zenject)
-2) Bootstraper
-3) Машина состояний игры : (Bootsstrap state, LoadProgress state, LoadService state, Gameloop state)
+2) Bootstrapper
+3) Машина состояний игры : (Bootstrap state, LoadProgress state, LoadService state, Gameloop state)
 4) GameFactory, UIFactory с инициализацией игрового мира и UI
 5) Сохранение и загрузка прогресса посредством SaveLoadService одним файлом json
 6) Загрузка всех необходимых ассетов через Addressables и AssetProviderService
@@ -12,4 +12,4 @@
 9) Пассивный UI с отделением от него логики через ActorUI
 10) InputService реализует New Input System
 ______________________________________________________________________
-11) Слана срверная часть https://github.com/AndreiChistikhin/CrazyAdventureServer для регистрации и авторизации пользователей, а так же записи времени прохождения в бд (Хостится у меня на компьютере, поэтому вряд ли получится авторизоваться)
+11) Сделана срверная часть https://github.com/AndreiChistikhin/CrazyAdventureServer для регистрации и авторизации пользователей, а так же записи времени прохождения в бд (Хостится у меня на компьютере, поэтому вряд ли получится авторизоваться)
